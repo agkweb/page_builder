@@ -11,7 +11,6 @@
     <script src="/js/grapesjs.min.js"></script>
     <script src="/js/grapesjs-blocks-basic.js"></script>
     <script src="/js/grapesjs-plugin-forms.js"></script>
-    <script src="/js/gjs.init.js"></script>
     <script src="/js/index.min.js"></script>
     <script src="/js/micromodal.min.js"></script>
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet" /> -->
@@ -246,6 +245,7 @@
             </div>
         </div>
     </div>
+    <script src="/js/gjs.init.js"></script>
 </div>
 </body>
 </html>

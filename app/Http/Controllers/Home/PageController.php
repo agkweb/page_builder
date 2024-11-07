@@ -163,29 +163,32 @@ class PageController extends Controller
     public function search(): Factory|View|Application
     {
         $keyword = request()->keyword;
+        $categories = Category::active()->get();
         if (request()->has('keyword') && trim($keyword) != ''){
             $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
         }else{
             $pages = Page::latest()->paginate(10);
         }
-        return view('pages/index' , compact('pages'));
+        return view('pages/index' , compact('pages', 'categories'));
     }
 
     public function searchFromTrash(): View|Factory|Application
     {
         $keyword = request()->keyword;
+        $categories = Category::active()->get();
         if (request()->has('keyword') && trim($keyword) != ''){
             $pages = Page::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
         }else{
             $pages = Page::onlyTrashed()->latest()->paginate(10);
         }
-        return view('pages/trash' , compact('pages'));
+        return view('pages/trash' , compact('pages', 'categories'));
     }
 
     public function trash(): View|Factory|Application
     {
         $pages = Page::onlyTrashed()->orderBy('status', 'desc')->paginate(10);
-        return view('pages/trash', compact('pages'));
+        $categories = Category::active()->get();
+        return view('pages/trash', compact('pages', 'categories'));
     }
 
     public function restore(Request $request): RedirectResponse

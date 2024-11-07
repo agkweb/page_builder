@@ -6,23 +6,23 @@ $(document).ready(function () {
     allowScripts: 1,
     forceClass: false,
 
-    storageManager: {
-      type: 0, // Storage type. Available: local | remote
-      type: "local", // Storage type. Available: local | remote
-      autosave: true, // Store data automatically
-      // autoload: true, // Autoload stored data on init
-      stepsBeforeSave: 1, // If autosave is enabled, indicates how many changes are necessary before the store method is triggered
-      // ...
-      // Default storage options
-      options: {
-        local: {
-          /* ... */
-        },
-        remote: {
-          /* ... */
-        },
-      },
-    },
+    // storageManager: {
+    //   type: 0, // Storage type. Available: local | remote
+    //   type: "local", // Storage type. Available: local | remote
+    //   autosave: true, // Store data automatically
+    //   // autoload: true, // Autoload stored data on init
+    //   stepsBeforeSave: 1, // If autosave is enabled, indicates how many changes are necessary before the store method is triggered
+    //   // ...
+    //   // Default storage options
+    //   options: {
+    //     local: {
+    //       /* ... */
+    //     },
+    //     remote: {
+    //       /* ... */
+    //     },
+    //   },
+    // },
     canvas: {
       styles: ["css/canvas.css"],
       scripts: [],
@@ -489,5 +489,5 @@ $(document).ready(function () {
         const cssCode = document.getElementById("css").value
         editor.setComponents(htmlCode);
         editor.setStyle(cssCode);
-    }, 5000);
+    }, 1);
 });

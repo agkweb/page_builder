@@ -38,8 +38,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required|min:3|max:18',
+        $request->validateWithBag( 'createCategory',[
+            'title' => 'required|min:3',
             'parent_id' => 'required',
             'status' => 'required',
             'is_active' => 'required'
@@ -89,7 +89,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:18',
+            'title' => 'required|min:3',
             'parent_id' => 'required',
             'status' => 'required',
             'is_active' => 'required'

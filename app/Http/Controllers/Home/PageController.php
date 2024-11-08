@@ -60,6 +60,13 @@ class PageController extends Controller
         try {
             DB::beginTransaction();
 
+            $hasForm = str_contains($request->html, "<form>");
+//            dd($hasForm);
+//            if (){
+//
+//            }
+
+
             Page::create([
                 'title' => $request->title,
                 'category_id' => $request->category_id,

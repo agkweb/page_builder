@@ -20,7 +20,7 @@
             <form method="POST" action="{{ route('categories.store') }}">
             @csrf
                 <div class="col-sm-12">
-                    <div class="card">
+                    <div class="card"style="text-align: start;">
                         <div class="card-header">
                             <strong>افزودن دسته بندی جدید</strong>
                         </div>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-3 form-control-label" for="select">دسته بندی:</label>
+                                    <label class="col-md-3 form-control-label px-0 pt-1" for="select">دسته بندی:</label>
                                     <div class="col-md-9">
                                         <select id="parent_id" name="parent_id" class="form-control input-lg">
                                             <option value="0">والد</option>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-3 form-control-label" for="select">فعال:</label>
+                                    <label class="col-md-3 form-control-label px-0 pt-1" for="select">فعال:</label>
                                     <div class="col-md-9">
                                         <select id="is_active" name="is_active" class="form-control input-lg">
                                             <option value="1" selected>فعال</option>

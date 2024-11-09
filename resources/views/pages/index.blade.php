@@ -35,7 +35,7 @@
                 <div class="form-group col-6  pr-0 d-flex row" style="text-align-last: start;">
                     <label for="filter" class="col-6 p-0" style="
     align-self: end;text-align-last: left; ">نمایش بر اساس: </label>
-                    <select class="form-control col-5" id="filter" name="filter" onchange="filterSearch()">
+                    <select class="form-control col-5 mr-1" id="filter" name="filter" onchange="filterSearch()">
                         <option {{ request()->filter == '0' ? 'selected' : '' }} value="0">همه</option>
                         <option {{ request()->filter == '2' ? 'selected' : '' }} value="2">دارای فرم</option>
                         <option {{ request()->filter == '1' ? 'selected' : '' }} value="1">بدون فرم</option>

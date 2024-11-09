@@ -2,7 +2,7 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/') }}"><i class="icon-speedometer"></i> داشبرد <span class="tag tag-info"></span></a>
+                <a class="nav-link" href="{{ url('/') }}"><i class="icon-speedometer"></i> داشبورد <span class="tag tag-info"></span></a>
             </li>
 
             <li class="nav-title">

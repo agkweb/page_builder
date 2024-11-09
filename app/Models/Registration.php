@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static where(string $string, string $string)
  * @method static latest()
  * @method static create(array $existedData)
+ * @method static whereHas(string $string, \Closure $param)
  */
 class Registration extends Model
 {

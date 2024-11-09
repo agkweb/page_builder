@@ -62,6 +62,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $registrations->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 @endsection

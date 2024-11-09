@@ -112,7 +112,7 @@
                     <tr>
                         <th scope="row">{{ $pages->firstItem() + $key }}</th>
                         <td class="text-right">{{ $page->title }}</td>
-                        <td class="text-right">{{ $page->category->title }}</td>>
+                        <td class="text-right">{{ $page->category->title }}</td>
                         <td class="text-right">{{ $page->is_active == 1 ? 'فعال' : 'غیرفعال' }}</td>
                         <td class="text-right">{{ number_format($page->visits) }}</td>
                         <td class="text-right">
@@ -220,6 +220,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $pages->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
     <script>

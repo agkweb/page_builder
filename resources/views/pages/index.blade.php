@@ -237,13 +237,13 @@
         </table>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
 <script>
     function filterSearch() {
         $('#filter').submit();
     }
 </script>
-@endsection
-
-@section('scripts')
-
 @endsection

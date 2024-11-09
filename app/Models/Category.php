@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static latest()
  * @method static active()
  * @method static create(array $array)
+ * @method static get()
  */
 class Category extends Model
 {

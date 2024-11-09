@@ -30,7 +30,7 @@
                 method="GET" id="filter">
                 <label for="filter" class="col-2 px-0 pt-1" style="
     text-align-last: left; ">جستجو:</label>
-                <input type="text" class="form-control col-3 ml-5" placeholder="جستجو بین صفحات" 
+                <input type="text" class="form-control col-3 ml-5" placeholder="جستجو بین صفحات"
                     value="{{ request()->has('keyword') ? request()->keyword : '' }}" name="keyword" id="search">
                 <div class="form-group col-6  pr-0 d-flex row" style="text-align-last: start;">
                     <label for="filter" class="col-6 p-0" style="
@@ -63,13 +63,13 @@
                                         value="{{ old('title') }}">
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="status" class="form-label">وضعیت:</label>
-                                    <input type="number" name="status" class="form-control" id="status"
-                                        value="{{ old('status') }}">
-                                </div>
-                            </div>
+{{--                            <div class="col-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="status" class="form-label">وضعیت:</label>--}}
+{{--                                    <input type="number" name="status" class="form-control" id="status"--}}
+{{--                                        value="{{ old('status') }}">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="col-md-3 form-control-label" for="category_id">دسته بندی:</label>
@@ -163,13 +163,13 @@
                                                         value="{{ $page->title }}">
                                                 </div>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="status" class="form-label">وضعیت:</label>
-                                                    <input type="number" name="status" class="form-control" id="status"
-                                                        value="{{ $page->status }}">
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-12">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="status" class="form-label">وضعیت:</label>--}}
+{{--                                                    <input type="number" name="status" class="form-control" id="status"--}}
+{{--                                                        value="{{ $page->status }}">--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label class="col-md-3 form-control-label" for="category_id">دسته

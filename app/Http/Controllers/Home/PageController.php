@@ -22,7 +22,7 @@ class PageController extends Controller
     public function index(): View|Factory|Application
     {
         $pages = Page::with('category')->latest()->paginate(10);
-        $categories = Category::active()->get();
+        $categories = Category::get();
         return view('pages/index', compact('pages', 'categories'));
     }
 
@@ -34,8 +34,7 @@ class PageController extends Controller
         $request->validateWithBag('validatingBasicInfo', [
             'title' => 'required',
             'category_id' => 'required',
-            'is_active' => 'required|string',
-            'status' => 'required'
+            'is_active' => 'required|string'
         ]);
 
         $data = $request->all();
@@ -53,7 +52,6 @@ class PageController extends Controller
             'category_id' => 'required',
             'html' => 'required|string',
             'css' => 'required|string',
-            'status' => 'required',
             'is_active' => 'required'
         ]);
 
@@ -100,7 +98,6 @@ class PageController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'is_active' => 'required|string',
-            'status' => 'required'
         ]);
 
         if($validator->fails()){
@@ -111,7 +108,6 @@ class PageController extends Controller
                'title' => $request->title,
                'category_id' => $request->category_id,
                'is_active' => $request->is_active,
-               'status' => $request->status
             ]);
             return view('pages.update', compact('page'));
         }
@@ -136,12 +132,15 @@ class PageController extends Controller
         try {
             DB::beginTransaction();
 
+            $hasForm = containsForm($request->html);
+
             $page->update([
                 'title' => $request->title,
                 'category_id' => $request->category_id,
                 'user_id' => '1',
                 'html' => $request->html,
-                'css' => $request->css
+                'css' => $request->css,
+                'status' => $hasForm ? 2 : 1,
             ]);
 
             DB::commit();
@@ -167,7 +166,7 @@ class PageController extends Controller
         $query = Page::query();
         $keyword = request()->keyword;
         $filter = request()->filter;
-        $categories = Category::active()->get();
+        $categories = Category::get();
         if (request()->has('keyword') && trim($keyword) != ''){
             $query->where('title', 'LIKE', '%'.trim($keyword).'%');
         }
@@ -183,7 +182,7 @@ class PageController extends Controller
     public function searchFromTrash(): View|Factory|Application
     {
         $keyword = request()->keyword;
-        $categories = Category::active()->get();
+        $categories = Category::get();
         if (request()->has('keyword') && trim($keyword) != ''){
             $pages = Page::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
         }else{
@@ -195,7 +194,7 @@ class PageController extends Controller
     public function trash(): View|Factory|Application
     {
         $pages = Page::onlyTrashed()->orderBy('status', 'desc')->paginate(10);
-        $categories = Category::active()->get();
+        $categories = Category::get();
         return view('pages/trash', compact('pages', 'categories'));
     }
 

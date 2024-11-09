@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>افزودن دسته بندی جدید</strong>
+                            <strong>ویرایش دسته بندی: {{ $category->title }}</strong>
                         </div>
                         @include('layout.errors', ['errors' => $errors->updateCategory])
                         <div class="card-block d-flex row">
@@ -33,12 +33,12 @@
                                     <input type="text" class="form-control" name="title" id="title" value="{{ $category->title }}">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="status" class="form-label">وضعیت:</label>
-                                    <input type="number" name="status" class="form-control" id="status" value="{{ $category->status }}">
-                                </div>
-                            </div>
+{{--                            <div class="col-12 col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="status" class="form-label">وضعیت:</label>--}}
+{{--                                    <input type="number" name="status" class="form-control" id="status" value="{{ $category->status }}">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label class="col-md-3 form-control-label" for="select">دسته بندی:</label>

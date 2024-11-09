@@ -41,7 +41,6 @@ class CategoryController extends Controller
         $request->validateWithBag( 'createCategory',[
             'title' => 'required|min:3',
             'parent_id' => 'required',
-            'status' => 'required',
             'is_active' => 'required'
         ]);
 
@@ -51,7 +50,7 @@ class CategoryController extends Controller
             Category::create([
                 'title' => $request->title,
                 'parent_id' => $request->parent_id,
-                'status' => $request->status,
+                'status' => '1',
                 'is_active' => $request->is_active
             ]);
 
@@ -91,7 +90,6 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3',
             'parent_id' => 'required',
-            'status' => 'required',
             'is_active' => 'required'
         ]);
 
@@ -105,7 +103,7 @@ class CategoryController extends Controller
             $category->update([
                 'title' => $request->title,
                 'parent_id' => $request->parent_id,
-                'status' => $request->status,
+                'status' => '1',
                 'is_active' => $request->is_active
             ]);
 

@@ -32,12 +32,12 @@
                                     <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="status" class="form-label">وضعیت:</label>
-                                    <input type="number" name="status" class="form-control" id="status" value="{{ old('status') }}">
-                                </div>
-                            </div>
+{{--                            <div class="col-12 col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="status" class="form-label">وضعیت:</label>--}}
+{{--                                    <input type="number" name="status" class="form-control" id="status" value="{{ old('status') }}">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label class="col-md-3 form-control-label px-0 pt-1" for="select">دسته بندی:</label>

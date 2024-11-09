@@ -39,7 +39,6 @@
 <form action="{{ route('pages.store') }}" id="pageData" method="POST" style="display: none;">
     @csrf
     <input type="text" name="title" id="title" value="{{ $data['title'] }}">
-    <input type="text" name="status" id="status" value="{{ $data['status'] }}">
     <input type="text" name="category_id" id="category_id" value="{{ $data['category_id'] }}">
     <input type="text" name="is_active" id="is_active" value="{{ $data['is_active'] }}">
 

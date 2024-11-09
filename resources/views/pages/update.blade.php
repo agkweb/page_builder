@@ -40,7 +40,6 @@
     @method('put')
     <input type="text" name="title" id="title" value="{{ $page->page_id }}">
     <input type="text" name="title" id="title" value="{{ $page->title }}">
-    <input type="text" name="status" id="status" value="{{ $page->status }}">
     <input type="text" name="category_id" id="category_id" value="{{ $page->category_id }}">
     <input type="text" name="is_active" id="is_active" value="{{ $page->is_active }}">
 

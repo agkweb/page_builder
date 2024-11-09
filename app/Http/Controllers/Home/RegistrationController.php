@@ -134,10 +134,12 @@ class RegistrationController extends Controller
     {
         $keyword = request()->keyword;
         if (request()->has('keyword') && trim($keyword) != ''){
-            $registrations = Registration::where('phone_number', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
+            $registrations = Registration::whereHas('page', function ($query) use ($keyword){
+                $query->where('slug', $keyword);
+            })->latest()->paginate(10);
         }else{
             $registrations = Registration::latest()->paginate(10);
         }
-        return view('pageForms/index' , compact('registrations'));
+        return view('registrations/index' , compact('registrations'));
     }
 }

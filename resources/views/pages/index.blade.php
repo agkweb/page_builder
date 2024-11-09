@@ -103,6 +103,7 @@
                     <th scope="col">عنوان</th>
                     <th scope="col">دسته بندی</th>
                     <th scope="col">فعال</th>
+                    <th scope="col">بازدیدها</th>
                     <th scope="col">تنظیمات</th>
                 </tr>
                 </thead>
@@ -111,8 +112,9 @@
                     <tr>
                         <th scope="row">{{ $pages->firstItem() + $key }}</th>
                         <td class="text-right">{{ $page->title }}</td>
-                        <td class="text-right">{{ $page->category->title }}</td>
+                        <td class="text-right">{{ $page->category->title }}</td>>
                         <td class="text-right">{{ $page->is_active == 1 ? 'فعال' : 'غیرفعال' }}</td>
+                        <td class="text-right">{{ number_format($page->visits) }}</td>
                         <td class="text-right">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -121,6 +123,9 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{ route('pages.show', ['page' => $page]) }}">
                                         نمایش
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('/registrationsSearch?keyword=' . $page->slug ) }}">
+                                        ثبت نامی ها
                                     </a>
                                     <button type="button" class="dropdown-item" data-toggle="modal" data-target="#editPageModal-{{ $page->id }}">
                                         ویرایش

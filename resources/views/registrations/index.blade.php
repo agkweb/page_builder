@@ -45,7 +45,7 @@
                     <tr>
                         <th>{{ $registrations->firstItem() + $key }}</th>
                         <td class="text-right">{{ $registration->page->title }}</td>
-                        <td class="text-right">{{ $category->phone_number }}</td>
+                        <td class="text-right">{{ $registration->phone_number }}</td>
                         <td class="text-right">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">

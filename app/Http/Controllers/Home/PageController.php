@@ -60,12 +60,7 @@ class PageController extends Controller
         try {
             DB::beginTransaction();
 
-            $hasForm = str_contains($request->html, "<form>");
-//            dd($hasForm);
-//            if (){
-//
-//            }
-
+            $hasForm = containsForm($request->html);
 
             Page::create([
                 'title' => $request->title,
@@ -73,7 +68,7 @@ class PageController extends Controller
                 'user_id' => '1',
                 'html' => $request->html,
                 'css' => $request->css,
-                'status' => $request->status,
+                'status' => $hasForm ? 2 : 1,
                 'is_active' => $request->is_active,
             ]);
 
@@ -170,10 +165,13 @@ class PageController extends Controller
     public function search(): Factory|View|Application
     {
         $keyword = request()->keyword;
+        $filter = request()->filter;
         $categories = Category::active()->get();
         if (request()->has('keyword') && trim($keyword) != ''){
-            $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
-        }else{
+            $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->where('status', '=', $filter)->latest()->paginate(10);
+        }elseif(request()->has('keyword') && trim($keyword) != ''){
+            $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->where('status', '=', $filter)->latest()->paginate(10);
+        }{
             $pages = Page::latest()->paginate(10);
         }
         return view('pages/index' , compact('pages', 'categories'));

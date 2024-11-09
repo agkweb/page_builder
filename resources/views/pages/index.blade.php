@@ -26,8 +26,16 @@
                </a>
             </div>
             <div class="col-6 mb-2" style="justify-items: end;">
-                <form class="ml-0" action="{{ route('pages.search') }}" method="GET">
+                <form class="ml-0" action="{{ route('pages.search') }}" method="GET" id="filter">
                     <input type="text" class="form-control" placeholder="جستجو بین صفحات" style="width: 250px" value="{{ request()->has('keyword') ? request()->keyword : '' }}" name="keyword">
+                    <div class="form-group col-sm-4">
+                        <label for="filter">نمایش بر اساس: </label>
+                        <select class="form-control" id="filter" name="filter" onchange="filterSearch()">
+                            <option value="0">همه</option>
+                            <option value="2">دارای فرم</option>
+                            <option value="1">بدون فرم</option>
+                        </select>
+                    </div>
                 </form>
             </div>
 
@@ -209,4 +217,13 @@
             </table>
         </div>
     </div>
+    <script>
+        function filterSearch(){
+            $('#filter').submit();
+        }
+    </script>
+@endsection
+
+@section('scripts')
+
 @endsection

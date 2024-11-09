@@ -236,6 +236,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $pages->links('vendor.pagination.bootstrap-4')}}
         </div>
     </div>
     <script>

@@ -31,9 +31,9 @@
                     <div class="form-group col-sm-4">
                         <label for="filter">نمایش بر اساس: </label>
                         <select class="form-control" id="filter" name="filter" onchange="filterSearch()">
-                            <option value="0">همه</option>
-                            <option value="2">دارای فرم</option>
-                            <option value="1">بدون فرم</option>
+                            <option {{ request()->filter == '0' ? 'selected' : '' }} value="0">همه</option>
+                            <option {{ request()->filter == '2' ? 'selected' : '' }} value="2">دارای فرم</option>
+                            <option {{ request()->filter == '1' ? 'selected' : '' }} value="1">بدون فرم</option>
                         </select>
                     </div>
                 </form>

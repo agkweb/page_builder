@@ -164,16 +164,19 @@ class PageController extends Controller
 
     public function search(): Factory|View|Application
     {
+        $query = Page::query();
         $keyword = request()->keyword;
         $filter = request()->filter;
         $categories = Category::active()->get();
         if (request()->has('keyword') && trim($keyword) != ''){
-            $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->where('status', '=', $filter)->latest()->paginate(10);
-        }elseif(request()->has('keyword') && trim($keyword) != ''){
-            $pages = Page::where('title', 'LIKE', '%'.trim($keyword).'%')->where('status', '=', $filter)->latest()->paginate(10);
-        }{
-            $pages = Page::latest()->paginate(10);
+            $query->where('title', 'LIKE', '%'.trim($keyword).'%');
         }
+        if(request()->has('filter') && trim($filter) != ''){
+            if ($filter != 0){
+                $query->where('status', '=', $filter);
+            }
+        }
+        $pages = $query->latest()->paginate(10);
         return view('pages/index' , compact('pages', 'categories'));
     }
 

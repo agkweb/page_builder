@@ -47,11 +47,13 @@
         <div class="modal fade" id="createPageModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="direction: rtl;">
                         <h5 class="modal-title" id="exampleModalLabel">ایجاد صفحه:</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close mr-auto ml-0" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+
+
                     </div>
                     <div class="modal-body text-right">
                         <form action="{{ route('pages.create') }}" method="GET">
@@ -63,13 +65,13 @@
                                         value="{{ old('title') }}">
                                 </div>
                             </div>
-{{--                            <div class="col-12">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="status" class="form-label">وضعیت:</label>--}}
-{{--                                    <input type="number" name="status" class="form-control" id="status"--}}
-{{--                                        value="{{ old('status') }}">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{-- <div class="col-12">--}}
+                                {{-- <div class="form-group">--}}
+                                    {{-- <label for="status" class="form-label">وضعیت:</label>--}}
+                                    {{-- <input type="number" name="status" class="form-control" id="status" --}} {{--
+                                        value="{{ old('status') }}">--}}
+                                    {{-- </div>--}}
+                                {{-- </div>--}}
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="col-md-3 form-control-label" for="category_id">دسته بندی:</label>
@@ -132,7 +134,8 @@
                                     <a class="dropdown-item" href="{{ route('pages.show', ['page' => $page]) }}">
                                         نمایش
                                     </a>
-                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#editPageModal-{{ $page->id }}">
+                                    <button type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#editPageModal-{{ $page->id }}">
                                         ویرایش
                                     </button>
                                     <button type="button" class="dropdown-item" data-toggle="modal"
@@ -147,7 +150,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">ویرایش صفحه: {{ $page->title }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close mr-auto ml-0" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -163,13 +166,13 @@
                                                         value="{{ $page->title }}">
                                                 </div>
                                             </div>
-{{--                                            <div class="col-12">--}}
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label for="status" class="form-label">وضعیت:</label>--}}
-{{--                                                    <input type="number" name="status" class="form-control" id="status"--}}
-{{--                                                        value="{{ $page->status }}">--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
+                                            {{-- <div class="col-12">--}}
+                                                {{-- <div class="form-group">--}}
+                                                    {{-- <label for="status" class="form-label">وضعیت:</label>--}}
+                                                    {{-- <input type="number" name="status" class="form-control" id="status"
+                                                        --}} {{-- value="{{ $page->status }}">--}}
+                                                    {{-- </div>--}}
+                                                {{-- </div>--}}
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label class="col-md-3 form-control-label" for="category_id">دسته
@@ -179,7 +182,8 @@
                                                             class="form-control input-lg">
                                                             @foreach($categories as $category)
                                                                 <option value="{{ $category->id }}" {{ $page->category_id == $category->id ? 'selected' : '' }}>
-                                                                    {{ $category->title }}</option>
+                                                                    {{ $category->title }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -213,7 +217,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">حذف صفحه: {{ $page->title }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close mr-auto ml-0" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -234,16 +238,16 @@
                         </div>
                     </tr>
                 @endforeach
-                </tbody>
-            </table>
-            {{ $pages->links('vendor.pagination.bootstrap-4')}}
-        </div>
+            </tbody>
+        </table>
+        {{ $pages->links('vendor.pagination.bootstrap-4')}}
     </div>
-    <script>
-        function filterSearch(){
-            $('#filter').submit();
-        }
-    </script>
+</div>
+<script>
+    function filterSearch() {
+        $('#filter').submit();
+    }
+</script>
 @endsection
 
 @section('scripts')

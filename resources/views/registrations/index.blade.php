@@ -15,7 +15,8 @@
         </li>
     </ol>
     <div class="wrapper container">
-        <div class="d-flex row">
+        <div class="d-flex row"style="
+    flex-direction: row-reverse;" >
 {{--             <div class="col-6 mb-2" style="text-align: justify;">--}}
 {{--                 <a class="btn btn-primary mr-0" href="{{ route('categories.create') }}">--}}
 {{--                 ایجاد دسته بندی جدید--}}

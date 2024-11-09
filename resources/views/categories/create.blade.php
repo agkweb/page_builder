@@ -16,8 +16,8 @@
     </ol>
 
     <div class="container wrapper">
-        <div class="row">
-            <form method="POST" action="{{ route('categories.store') }}">
+        <div class="row d-flex col-12">
+            <form method="POST" class="col-12" action="{{ route('categories.store') }}">
             @csrf
                 <div class="col-sm-12">
                     <div class="card"style="text-align: start;">
@@ -27,9 +27,9 @@
                         @include('layout.errors', ['errors' => $errors->createCategory])
                         <div class="card-block d-flex row">
                             <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="title">عنوان:</label>
-                                    <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
+                                <div class="form-group d-flex row ">
+                                    <label for="title" class="col-3">عنوان:</label>
+                                    <input type="text" class="form-control col-8" name="title" id="title" value="{{ old('title') }}">
                                 </div>
                             </div>
 {{--                            <div class="col-12 col-md-6">--}}

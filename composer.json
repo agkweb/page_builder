@@ -6,13 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-dom": "*",
         "cviebrock/eloquent-sluggable": "^11.0",
         "hekmatinasser/verta": "^8.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^1.1",
-        "php-flasher/flasher-laravel": "^2.1",
-        "ext-dom": "*"
+        "php-flasher/flasher-laravel": "^2.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

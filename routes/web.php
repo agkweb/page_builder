@@ -12,6 +12,7 @@ Route::get('/', function () {
 Route::get('pagesSearch', [PageController::class , 'search'])->name('pages.search');
 Route::get('pages/trash', [PageController::class , 'trash'])->name('pages.trash');
 Route::resource('pages', PageController::class);
+Route::post('pages/upload/images', [PageController::class, 'upload'])->name('pages.upload');
 Route::post('pages/{page}/restore', [PageController::class , 'restore'])->name('pages.restore');
 Route::get('pagesSearchFromTrash', [PageController::class , 'searchFromTrash'])->name('pages.searchFromTrash');
 

@@ -12,6 +12,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller
@@ -203,5 +204,15 @@ class PageController extends Controller
         Page::onlyTrashed()->find($request->page)->restore();
         flash()->flash("success", 'صفحه مورد نظر با موفقیت بازگردانی شد!', [], 'موفقیت آمیز');
         return redirect()->back();
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('files')){
+            $file = $request->file('files');
+            $path = $file->store('images', 'public');
+            $url = Storage::url($path);
+            return ['data' => $url];
+        }
     }
 }

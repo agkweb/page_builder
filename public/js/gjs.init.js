@@ -204,11 +204,21 @@ $(document).ready(function () {
           name: "انعطاف پذیری",
           open: false,
           properties: [
+            "flex-direction",
+                    "flex-wrap",
+                    "justify-content",
+                    "align-items",
+                    "align-content",
+                    "order",
+                    "flex-basis",
+                    "flex-grow",
+                    "flex-shrink",
+                    "align-self",
             {
               name: "فعال کردن انعطاف پذیری",
               property: "display",
               type: "select",
-              defaults: "block",
+              defaults: "flex",
               list: [
                 { value: "block", name: "Disable" },
                 { value: "flex", name: "Enable" },
@@ -412,11 +422,14 @@ $(document).ready(function () {
   editor.Panels.getButton("options", "sw-visibility").set("active", false);
   editor.Panels.getButton("views", "open-blocks").set("active", true);
   // editor.Panels.removeButton('options', 'export-template');
-  // editor.Panels.addButton({id: "export", className: "fa fa-download", command: "export"});
+  // editor.Panels.addButton({id: "export-template", className: "fa fa-download"});
+  // editor.Panels.getButton()
+  editor.Panels.getButton("options", "export-template").set("className", "fa fa-download")
+
 
 
   // editor.Panels.removeButton('options', 'preview');
-  //editor.Panels.removeButton('options', 'gjs-open-import-webpage');
+  editor.Panels.removeButton('options', 'gjs-open-import-webpage');
 
   //remove uneeded body wrapper from mjml
   editor.getWrapper().toHTML = function (opts) {

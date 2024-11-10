@@ -20,7 +20,7 @@
             <form method="POST" class="col-12" action="{{ route('categories.store') }}">
             @csrf
                 <div class="col-sm-12">
-                    <div class="card"style="text-align: start;">
+                    <div class="card" style="text-align: start;">
                         <div class="card-header">
                             <strong>افزودن دسته بندی جدید</strong>
                         </div>

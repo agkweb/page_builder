@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @php
-    $active = 'indexRegistration';
+    $active = 'indexRegistrations';
 @endphp
 
 @section('title')
@@ -15,20 +15,10 @@
         </li>
     </ol>
     <div class="wrapper container">
-        <div class="d-flex row"style="
-    flex-direction: row-reverse;" >
-{{--             <div class="col-6 mb-2" style="text-align: justify;">--}}
-{{--                 <a class="btn btn-primary mr-0" href="{{ route('categories.create') }}">--}}
-{{--                 ایجاد دسته بندی جدید--}}
-{{--                </a>--}}
-{{--                 <a href="{{ route('categories.trash') }}" class="btn btn-secondary " style="max-width: fit-content">--}}
-{{--                     <i class="fa fa-trash"></i>--}}
-{{--                     سطل آشغال--}}
-{{--                 </a>--}}
-{{--             </div>--}}
+        <div class="d-flex row" style="flex-direction: row-reverse;" >
             <div class="col-6 mb-2" style="justify-items: end;">
                 <form class="ml-0" action="{{ route('registrations.search') }}" method="GET">
-                    <input type="text" class="form-control" placeholder="جستجو بین ثبت نامی ها با شماره تلفن" style="width: 250px" value="{{ request()->has('keyword') ? request()->keyword : '' }}" name="keyword">
+                    <input type="text" class="form-control" placeholder="جستجو بین ثبت نامی ها با نام صفحه" style="width: 250px" value="{{ request()->has('keyword') ? request()->keyword : '' }}" name="keyword">
                 </form>
             </div>
 

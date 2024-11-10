@@ -134,6 +134,9 @@
                                     <a class="dropdown-item" href="{{ route('pages.show', ['page' => $page]) }}">
                                         نمایش
                                     </a>
+                                    <a class="dropdown-item" href="{{ url('/registrationsSearch?keyword=' . $page->title ) }}">
+                                        ثبت نامی ها
+                                    </a>
                                     <button type="button" class="dropdown-item" data-toggle="modal"
                                         data-target="#editPageModal-{{ $page->id }}">
                                         ویرایش

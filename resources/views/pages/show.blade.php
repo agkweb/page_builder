@@ -9,6 +9,7 @@
     </style>
 </head>
 <body>
+    @include('layout.errors')
     {!! $page->html !!}
 </body>
 </html>

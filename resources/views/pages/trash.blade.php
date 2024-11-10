@@ -23,7 +23,7 @@
                     صفحات
                 </a>
             </div>
-            <div class="col-6 mb-2" style="justify-items: end;"><form class="ml-0" action="{{ route('categories.searchFromTrash') }}" method="GET">
+            <div class="col-6 mb-2" style="justify-items: end;"><form class="ml-0" action="{{ route('pages.searchFromTrash') }}" method="GET">
                     <input type="text" class="form-control" placeholder="جستجو بین صفحات حذف شده" style="width: 250px" value="{{ request()->has('keyword') ? request()->keyword : '' }}" name="keyword">
                 </form>
             </div>

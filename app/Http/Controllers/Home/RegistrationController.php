@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\Models\Page;
-use App\Models\PageForm;
 use App\Models\Registration;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -13,15 +11,14 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 class RegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $registrations = Registration::latest()->paginate(10);
         return view('registrations/index', compact('registrations'));
@@ -44,7 +41,7 @@ class RegistrationController extends Controller
         $request->validate([
             'page_id' => 'required',
             'fullname' => 'nullable|string',
-            'phone_number' => 'required|string',
+            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
             'email' => 'nullable|email',
             'degree' => 'nullable|string',
             'field' => 'nullable|string',
@@ -135,7 +132,7 @@ class RegistrationController extends Controller
         $keyword = request()->keyword;
         if (request()->has('keyword') && trim($keyword) != ''){
             $registrations = Registration::whereHas('page', function ($query) use ($keyword){
-                $query->where('slug', $keyword);
+                $query->where('title', 'LIKE', '%'.trim($keyword).'%');
             })->latest()->paginate(10);
         }else{
             $registrations = Registration::latest()->paginate(10);

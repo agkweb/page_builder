@@ -5,22 +5,19 @@ $(document).ready(function () {
     container: "#gjs",
     allowScripts: 1,
     forceClass: false,
+    storageManager: 0,
+      assetManager: {
+          upload: 'http://localhost:8000/pages/upload/images',
+          uploadName: 'files',
+          multiUpload: true,
+          autoAdd: true,
+          assets: [
+                  // 'http://localhost:8000/upload/images/11.jpg',
+          ],
+      },
 
 
-    // assetManager: {
-    //   assets: {
-    //     upload: 'C:/Users/tablighat5/Desktop/agk-formbuilder/page_builder/filess/',
-    //     uploadName: 'files',
-    //     src: "C:/Users/tablighat5/Desktop/agk-formbuilder/page_builder/filess/",
-    //     width: 400 ,
-    //     height: 400,
-    //   },
-    //   src: "C:/Users/tablighat5/Desktop/agk-formbuilder/page_builder/filess",
-      
-    // },
-    
-        
-      
+
     // storageManager: {
     //   type: 0, // Storage type. Available: local | remote
     //   type: "local", // Storage type. Available: local | remote
@@ -499,22 +496,21 @@ $(document).ready(function () {
   // const cssCode = editor.getCss();
   // const htmlCode = editor.getHtml();
 
-  // Get current project data
+  // // Get current project data
   // const projectData = editor.getProjectData();
-  // ...
-  // Load project data
+  // // Load project data
   // editor.loadProjectData(projectData);
-
-  // Store data
+  //
+  // // Store data
   // const storedProjectData = editor.store();
-
+  //
   // // Load data
   // const loadedProjectData = editor.load();
   // console.log(projectData);
-
-
+  //
+  //
   // const amConfig = editor.AssetManager.getConfig();
-
+  //
   // console.log(amConfig);
     setTimeout(() => {
         const htmlCode = document.getElementById("html").value;

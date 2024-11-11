@@ -208,11 +208,22 @@ class PageController extends Controller
 
     public function upload(Request $request)
     {
-        if ($request->hasFile('files')){
-            $file = $request->file('files');
-            $path = $file->store('images', 'public');
-            $url = Storage::url($path);
-            return ['data' => $url];
+        $folder = 'upload/images';
+
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            $urls = [];
+
+            foreach ($files as $file) {
+                $path = $file->store($folder, 'public');
+                $urls[] = Storage::url($path);
+            }
+
+            return response()->json([
+                'data' => $urls
+            ]);
         }
+
+        return response()->json(['message' => 'No file uploaded'], 400);
     }
 }

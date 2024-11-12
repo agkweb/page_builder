@@ -24,13 +24,9 @@ class RegistrationController extends Controller
         return view('registrations/index', compact('registrations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Registration $registration)
     {
-//        $categories = Category::active()->get();
-//        return view('pages.make');
+        return view('registrations.show', compact('registration'));
     }
 
     /**
@@ -139,4 +135,5 @@ class RegistrationController extends Controller
         }
         return view('registrations/index' , compact('registrations'));
     }
+
 }

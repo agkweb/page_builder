@@ -131,6 +131,11 @@
                                     تنظیمات
                                 </button>
                                 <div class="dropdown-menu">
+                                    @if($page->status == 2)
+                                        <a class="dropdown-item" href="{{ route('pages.export', ['page' => $page]) }}">
+                                            خروجی اکسل
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('pages.show', ['page' => $page]) }}">
                                         نمایش
                                     </a>

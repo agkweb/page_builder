@@ -12,6 +12,8 @@ Route::get('/', function () {
 Route::post('pages/upload/images', [PageController::class, 'upload']);
 Route::get('pagesSearch', [PageController::class , 'search'])->name('pages.search');
 Route::get('pages/trash', [PageController::class , 'trash'])->name('pages.trash');
+Route::get('pages/export/{page}', [PageController::class , 'export'])->name('pages.export');
+Route::post('pages/export/{page}', [PageController::class , 'exportInExcel'])->name('pages.exportInExcel');
 Route::resource('pages', PageController::class);
 Route::post('pages/{page}/restore', [PageController::class , 'restore'])->name('pages.restore');
 Route::get('pagesSearchFromTrash', [PageController::class , 'searchFromTrash'])->name('pages.searchFromTrash');

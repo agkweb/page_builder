@@ -76,7 +76,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-right">
-                                        آیا از حذف دسته بندی مطمعن هستید؟
+                                        آیا از حذف دسته بندی مطمئن هستید؟
                                     </div>
                                     <form action="{{ route('categories.destroy', ['category' => $category]) }}" method="POST">
                                         <div class="modal-footer">

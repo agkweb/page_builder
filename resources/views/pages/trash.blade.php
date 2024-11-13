@@ -62,7 +62,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-right">
-                                        آیا از بازگردانی صفحه مطمعن هستید؟
+                                        آیا از بازگردانی صفحه مطمئن هستید؟
                                     </div>
                                     <form action="{{ route('pages.restore', ['page' => $page]) }}" method="POST">
                                         <div class="modal-footer">

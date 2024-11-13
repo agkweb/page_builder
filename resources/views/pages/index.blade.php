@@ -225,7 +225,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-right">
-                                        آیا از حذف صفحه مطمعن هستید؟
+                                        آیا از حذف صفحه مطمئن هستید؟
                                     </div>
                                     <form action="{{ route('pages.destroy', ['page' => $page]) }}" method="POST">
                                         <div class="modal-footer">

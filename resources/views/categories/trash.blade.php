@@ -62,7 +62,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body text-right">
-                                    آیا از بازگردانی دسته بندی مطمعن هستید؟
+                                    آیا از بازگردانی دسته بندی مطمئن هستید؟
                                 </div>
                                 <form action="{{ route('categories.restore', ['category' => $category]) }}" method="POST">
                                     <div class="modal-footer">

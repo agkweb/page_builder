@@ -5,7 +5,7 @@
 @endphp
 
 @section('title')
-    ثبت نامی ها: {{ $registeration->phone_number }}
+    ثبت نامی ها: {{ $registration->phone_number }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <li class="breadcrumb-item">خانه</li>
         <li class="breadcrumb-item"><a href="#">مدیریت</a>
         </li>
-        <li class="breadcrumb-item active">نمایش ثبت نامی: {{ $registeration->phone_number }}</li>
+        <li class="breadcrumb-item active">نمایش ثبت نامی: {{ $registration->phone_number }}</li>
     </ol>
 
     <div class="container text-right">
@@ -21,45 +21,60 @@
             <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong>نمایش ثبت نامی: {{ $registeration->phone_number }}</strong>
+                            <strong>نمایش ثبت نامی: {{ $registration->phone_number }}</strong>
                         </div>
                         <div class="card-block d-flex row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="fullname">نام و نام خانوادگی:</label>
-                                    <input type="text" class="form-control" id="fullname" value="{{ $registeration->fullname }}" disabled>
+                                    <input type="text" class="form-control" id="fullname" value="{{ $registration->fullname ? $registration->fullname : '' }}" disabled>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="status" class="form-label">وضعیت:</label>
-                                    <input type="number" class="form-control" id="status" value="{{ $category->status }}" disabled>
+                                    <label for="phone_number" class="form-label">شماره تلفن:</label>
+                                    <input type="number" class="form-control" id="phone_number" value="{{ $registration->phone_number }}" disabled>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-3 form-control-label" for="select">دسته بندی:</label>
-                                    <div class="col-md-9">
-                                        <select id="parent_id" class="form-control input-lg" disabled>
-                                            <option selected>{{ $category->parent_id != 0 ? $category->parent->title : 'والد' }}</option>
-                                        </select>
-                                    </div>
+                                    <label for="email">ایمیل:</label>
+                                    <input type="email" class="form-control" id="email" value="{{ $registration->email ? $registration->email : '' }}" disabled>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-3 form-control-label" for="select">فعال:</label>
-                                        <div class="col-md-9">
-                                            <select id="is_active" name="is_active" class="form-control input-lg" disabled>
-                                                <option {{ $category->is_active == 1 ? 'selected' : '' }}>فعال</option>
-                                                <option {{ $category->is_active == 0 ? 'selected' : '' }}>غیرفعال</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="license">مدرک:</label>
+                                    <input type="text" class="form-control" id="license" value="{{ $registration->license ? $registration->license : '' }}" disabled>
                                 </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="university">دانشگاه:</label>
+                                    <input type="text" class="form-control" id="university" value="{{ $registration->university_name ? $registration->university_name : '' }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="province">استان:</label>
+                                    <input type="text" class="form-control" id="province" value="{{ $registration->province ? $registration->province : '' }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="city">شهر:</label>
+                                    <input type="text" class="form-control" id="city" value="{{ $registration->city ? $registration->city->name : '' }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="created_at">تاریخ ثبت نام:</label>
+                                    <input type="text" class="form-control" id="created_at" value="{{ verta($registration->created_at) }}" disabled>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('categories.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>برگشت</a>
+                            <a href="{{ route('registrations.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>برگشت</a>
                         </div>
                     </div>
                 </div>

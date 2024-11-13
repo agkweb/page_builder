@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 
 function generateFileName($name): string
 {
@@ -19,4 +20,15 @@ function containsForm($htmlContent): bool
     @$dom->loadHTML($htmlContent);
     $forms = $dom->getElementsByTagName('form');
     return $forms->length > 0;
+}
+
+function convertToGregorianDate($date): ?string
+{
+    if ($date == null){
+        return null;
+    }
+    $pattern = "#[/\s]#";
+    $splitedSolarDate = preg_split($pattern, $date);
+    $gregorianFormat = Verta::jalaliToGregorian($splitedSolarDate[0],$splitedSolarDate[1],$splitedSolarDate[2]);
+    return implode("/" , $gregorianFormat) . " " . $splitedSolarDate[3];
 }

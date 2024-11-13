@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Registration;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PageController extends Controller
 {
@@ -225,5 +228,97 @@ class PageController extends Controller
         }
 
         return response()->json(['message' => 'No file uploaded'], 400);
+    }
+
+    public function export(Page $page)
+    {
+        if ($page->status != 2){
+            flash()->flash("warning", 'صفحه مورد نظر فرم ندارد!', [], 'صفحه اشتباه!');
+            return redirect()->back();
+        }else{
+            return view('pages.export', compact('page'));
+        }
+//        $fileName = 'registrations.csv';
+//
+//        $registrations = Registration::all();
+//
+//        $headers = [
+//            "Content-type"        => "text/csv",
+//            "Content-Disposition" => "attachment; filename=$fileName",
+//            "Pragma"              => "no-cache",
+//            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+//            "Expires"             => "0"
+//        ];
+//
+//        $columns = ['ID', 'fullname', 'phone_number', 'Created At', 'Updated At'];
+//
+//        $callback = function() use ($registrations, $columns) {
+//            $file = fopen('php://output', 'w');
+//            fputcsv($file, $columns);
+//
+//            foreach ($registrations as $registration) {
+//                $row = [
+//                    $registration->id,
+//                    $registration->page_id,
+//                    $registration->fullname,
+//                    $registration->created_at,
+//                    $registration->updated_at
+//                ];
+//
+//                fputcsv($file, $row);
+//            }
+//
+//            fclose($file);
+//        };
+//
+//        return response()->stream($callback, 200, $headers);
+    }
+
+    public function exportInExcel(Request $request, Page $page): StreamedResponse
+    {
+        $request->validate([
+            'start' => 'required',
+            'end' => 'required',
+        ]);
+
+        $fileName = 'registrations.csv';
+
+        $registrations = Registration::where('page_id', $page->id)->whereBetween('created_at',[convertToGregorianDate($request->start), convertToGregorianDate($request->end)])->get();
+
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $callback = function() use ($registrations,) {
+            $columns = ['آیدی', 'نام و نام خانوادگی', 'شماره تلفن', 'ایمیل', 'مدرک', 'رشته', 'دانشگاه', 'استان', 'شهر', 'تاریخ ایجاد رکورد'];
+            $file = fopen('php://output', 'w');            // Adding BOM to ensure UTF-8 support in Excel
+            fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
+            fputcsv($file, $columns);
+
+            foreach ($registrations as $registration) {
+                $row = [
+                    $registration->id,
+                    $registration->fullname,
+                    $registration->phone_number,
+                    $registration->email,
+                    $registration->license,
+                    $registration->major,
+                    $registration->university,
+                    $registration->province ? $registration->province->name : '',
+                    $registration->city ? $registration->city->name : '',
+                    verta($registration->created_at),
+                ];
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

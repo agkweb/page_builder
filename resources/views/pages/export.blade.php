@@ -15,15 +15,15 @@
     </li>
 </ol>
 <div class="wrapper container">
-    <div class="d-flex row">
-        <div class="col-6 mb-2" style="text-align: justify;">
+    <div class="d-flex row justify-content-center">
+        <div class="col-8 mb-2" style="text-align: justify;">
             <a href="{{ route('pages.index') }}" class="btn btn-primary mr-0">
                 صفحات
             </a>
         </div>
-        <form method="POST" action="{{ route('pages.exportInExcel', ['page' => $page]) }}">
+        <form class="col-8" method="POST" action="{{ route('pages.exportInExcel', ['page' => $page]) }}">
             @csrf
-            <div class="col-sm-12">
+            <div class="col-sm-12 p-0">
                 <div class="card text-end">
                     <div class="card-header" style="text-align: right;">
                         <strong>خروجی صفحه: {{ $page->title }}</strong>
@@ -33,13 +33,13 @@
     text-align: right">
                         <div class="col-12 col-md-6">
                             <div class="form-group row">
-                                <label for="title" class="col-3">از تاریخ: </label>
+                                <label for="title" class="col-3" style="align-self: end;" >از تاریخ: </label>
                                 <input data-jdp type="text" class="form-control col-8" name="start" id="start" value="{{ old('start') }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group row">
-                                <label for="title" class="col-3">تا تاریخ: </label>
+                                <label for="title" class="col-3" style="align-self: end;">تا تاریخ: </label>
                                 <input data-jdp type="text" class="form-control col-8" name="end" id="end" value="{{ old('end') }}">
                             </div>
                         </div>

@@ -46,17 +46,36 @@
                             <div class="col-12 col-md-12">
                                 <div class="form-group d-flex row ">
                                     <label for="description" class="col-3">توضیحات:</label>
-                                    <textarea class="form-control col-12" name="description" id="description">
-                                        {{ old('description') }}
-                                    </textarea>
+                                    <textarea class="form-control col-12" name="description" id="description">{{ old('description') }}</textarea>
                                 </div>
                             </div>
-                            <div id="czContainer" class="col-12 col-md-12">
-                                <div class="form-group d-flex row ">
-                                    <label for="description" class="col-3">توضیحات:</label>
-                                    <textarea class="form-control col-12" name="description" id="description">
-                                        {{ old('description') }}
-                                    </textarea>
+                            <div id="czContainer">
+                                <div id="first">
+                                    <div class="recordset">
+                                        <div class="row">
+                                            <span class="col-12 col-lg-12 my-2">
+                                                <label for="question_title">نام سوال: *</label>
+                                                <input id="question_title" type="text" name="question_title[title][]" class="form-control">
+                                            </span>
+
+                                            <span class="col-12 col-lg-3 my-2">
+                                                <label for="value">گزینه اول: *</label>
+                                                <input id="value" type="text" name="question_responses[response][]" class="form-control" required>
+                                            </span>
+                                            <span class="col-12 col-lg-3 my-2">
+                                                <label for="value">گزینه دوم: </label>
+                                                <input id="value" type="text" name="question_responses[response][]" class="form-control">
+                                            </span>
+                                            <span class="col-12 col-lg-3 my-2">
+                                                <label for="value">گزینه سوم: </label>
+                                                <input id="value" type="text" name="question_responses[response][]" class="form-control">
+                                            </span>
+                                            <span class="col-12 col-lg-3 my-2">
+                                                <label for="value">گزینه چهارم: </label>
+                                                <input id="value" type="text" name="question_responses[response][]" class="form-control">
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

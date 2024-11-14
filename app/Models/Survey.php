@@ -7,6 +7,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -15,52 +16,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Survey extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
     protected $table = "surveys";
 
-    public function scopeActive($query): void
+    public function questions(): HasMany
     {
-        $query->where('is_active', 1);
-    }
-
-    public function pages(): BelongsTo
-    {
-        return $this->belongsTo(Survey::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
+        return $this->hasMany(Question::class);
     }
 
     protected static function boot(): void
     {
         parent::boot();
-        static::creating(function ($page) {
-            $page->slug = SlugService::createSlug($page, 'slug', $page->title);
+        static::deleting(function ($survey){
+            foreach ($survey->questions as $question){
+                $question->delete();
+            }
         });
-        static::updating(function ($page) {
-            $page->slug = SlugService::createSlug($page, 'slug', $page->title);
-        });
-        static::deleting(function ($page){
-            $page->update([
-                'is_active' => 0
-            ]);
-        });
-        static::restoring(function ($page){
-            $page->update([
-                'is_active' => 1
-            ]);
+        static::restoring(function ($survey){
+            foreach ($survey->questions as $question){
+                $question->restore();
+            }
         });
     }
 }

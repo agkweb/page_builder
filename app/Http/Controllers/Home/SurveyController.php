@@ -33,16 +33,9 @@ class SurveyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request): Factory|View|Application
+    public function create(): Factory|View|Application
     {
-        $request->validateWithBag('validatingBasicInfo', [
-            'title' => 'required',
-            'description' => 'required'
-        ]);
-
-        $data = $request->all();
-
-        return view('surveys.make', compact('data'));
+        return view('surveys.create');
     }
 
     /**
@@ -96,21 +89,7 @@ class SurveyController extends Controller
      */
     public function edit(Request $request, Survey $survey)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'description' => 'required'
-        ]);
-
-        if($validator->fails()){
-            return back()->withErrors($validator, 'updateBasicInfo')->withInput()->with(['survey_id' => $survey->id]);
-        }else{
-            $survey = Survey::findOrFail($request->page_id);
-            $survey->update([
-                'title' => 'required',
-                'description' => 'required'
-            ]);
-            return view('surveys.update', compact('survey'));
-        }
+        return view('surveys.update', compact('survey'));
     }
 
     /**

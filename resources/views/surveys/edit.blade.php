@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @php
-    $active = 'showSurvey';
+    $active = 'editSurvey';
 @endphp
 
 @section('title')

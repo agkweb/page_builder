@@ -70,9 +70,6 @@
                                     <a class="dropdown-item" href="{{ route('surveys.show', ['survey' => $survey]) }}">
                                         نمایش
                                     </a>
-                                    <a class="dropdown-item" href="{{ url('/surveysSearch?keyword=' . $survey->title ) }}">
-                                        ثبت نامی ها
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('surveys.edit', ['survey' => $survey]) }}">
                                         ویرایش
                                     </a>

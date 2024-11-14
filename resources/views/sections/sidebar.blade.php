@@ -27,6 +27,13 @@
             <li class="nav-item">
                 <a class="nav-link {{ $active == 'indexRegistrations' ? 'active' : '' }}" href="{{ route('registrations.index') }}"><i class="icon-list"></i> لیست ثبت نامی ها</a>
             </li>
+
+            <li class="nav-title">
+                مدیریت پرسش نامه ها
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ $active == 'indexSurveys' ? 'active' : '' }}" href="{{ route('surveys.index') }}"><i class="icon-list"></i> لیست پرسش نامه ها</a>
+            </li>
         </ul>
     </nav>
 </div>

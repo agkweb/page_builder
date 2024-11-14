@@ -43,37 +43,39 @@ class SurveyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-//        $request->validateWithBag('createSurvey', [
-//            'title' => 'required',
-//            'category_id' => 'required',
-//            'html' => 'required|string',
-//            'css' => 'required|string',
-//            'is_active' => 'required'
-//        ]);
-//
-//        try {
-//            DB::beginTransaction();
-//
-//            $hasForm = containsForm($request->html);
-//
-//            Page::create([
-//                'title' => $request->title,
-//                'category_id' => $request->category_id,
-//                'user_id' => '1',
-//                'html' => $request->html,
-//                'css' => $request->css,
-//                'status' => $hasForm ? 2 : 1,
-//                'is_active' => $request->is_active,
-//            ]);
-//
-//            DB::commit();
-//        }catch (Exception $ex) {
-//            DB::rollBack();
-//            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
-//        }
-//
-//        flash()->flash("success", 'با موفقیت به صفحات اضافه شد.', [], 'موفقیت آمیز');
-//        return redirect()->back();
+        dd($request->all());
+        $request->validateWithBag('createSurvey', [
+            'title' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'is_active' => 'nullable',
+            'variation_values' => 'required',
+            'variation_values.*.*' => 'required',
+            'variation_values.quantity.*' => 'integer',
+            'variation_values.price.*' => 'integer',
+            'variation_values.sku.*' => 'integer',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            Survey::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'status' => '1',
+                'is_active' => $request->is_active
+            ]);
+
+            // add questions
+
+            DB::commit();
+        }catch (Exception $ex) {
+            DB::rollBack();
+            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
+        }
+
+        flash()->flash("success", 'با موفقیت به صفحات اضافه شد.', [], 'موفقیت آمیز');
+        return redirect()->back();
     }
 
     /**
@@ -87,7 +89,7 @@ class SurveyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Survey $survey)
+    public function edit(Survey $survey)
     {
         return view('surveys.update', compact('survey'));
     }
@@ -142,55 +144,47 @@ class SurveyController extends Controller
 
     public function search(): Factory|View|Application
     {
-//        $query = Survey::query();
-//        $keyword = request()->keyword;
-//        $filter = request()->filter;
-//        if (request()->has('keyword') && trim($keyword) != ''){
-//            $query->where('title', 'LIKE', '%'.trim($keyword).'%');
-//        }
-//        if(request()->has('filter') && trim($filter) != ''){
-//            if ($filter != 0){
-//                $query->where('status', '=', $filter);
-//            }
-//        }
-//        $pages = $query->latest()->paginate(10);
-//        return view('pages/index' , compact('pages'));
+        $keyword = request()->keyword;
+        if (request()->has('keyword') && trim($keyword) != ''){
+            $surveys = Survey::where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
+        }else{
+            $surveys = Survey::latest()->paginate(10);
+        }
+        return view('surveys/index' , compact('surveys'));
     }
 
     public function searchFromTrash(): View|Factory|Application
     {
-//        $keyword = request()->keyword;
-//        $categories = Category::get();
-//        if (request()->has('keyword') && trim($keyword) != ''){
-//            $pages = Page::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
-//        }else{
-//            $pages = Page::onlyTrashed()->latest()->paginate(10);
-//        }
-//        return view('pages/trash' , compact('pages', 'categories'));
+        $keyword = request()->keyword;
+        if (request()->has('keyword') && trim($keyword) != ''){
+            $surveys = Survey::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
+        }else{
+            $surveys = Survey::onlyTrashed()->latest()->paginate(10);
+        }
+        return view('surveys/trash' , compact('surveys'));
     }
 
     public function trash(): View|Factory|Application
     {
-//        $pages = Page::onlyTrashed()->orderBy('status', 'desc')->paginate(10);
-//        $categories = Category::get();
-//        return view('pages/trash', compact('pages', 'categories'));
+        $surveys = Survey::onlyTrashed()->orderBy('status', 'desc')->latest()->paginate(10);
+        return view('surveys/trash', compact('surveys'));
     }
 
     public function restore(Request $request): RedirectResponse
     {
-//        Page::onlyTrashed()->find($request->page)->restore();
-//        flash()->flash("success", 'صفحه مورد نظر با موفقیت بازگردانی شد!', [], 'موفقیت آمیز');
-//        return redirect()->back();
+        Survey::onlyTrashed()->find($request->survey)->restore();
+        flash()->flash("success", 'پرسش نامه مورد نظر با موفقیت بازگردانی شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
     }
 
     public function export(Survey $survey)
     {
-//        if ($page->status != 2){
-//            flash()->flash("warning", 'صفحه مورد نظر فرم ندارد!', [], 'صفحه اشتباه!');
-//            return redirect()->back();
-//        }else{
-//            return view('pages.export', compact('page'));
-//        }
+        if ($survey->status != 2){
+            flash()->flash("warning", 'پرسش نامه مورد نظر فرم ندارد!', [], 'پرسش نامه اشتباه!');
+            return redirect()->back();
+        }else{
+            return view('surveys.export', compact('survey'));
+        }
     }
 
     public function exportInExcel(Request $request, Page $page): StreamedResponse

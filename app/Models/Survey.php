@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static latest()
  * @method static findOrFail(mixed $page_id)
+ * @method static create(array $array)
+ * @method static where(string $string, string $string1, string $string2)
  */
 class Survey extends Model
 {

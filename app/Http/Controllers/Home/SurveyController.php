@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Question;
 use App\Models\Registration;
 use App\Models\Survey;
 use Carbon\Carbon;
@@ -47,26 +48,39 @@ class SurveyController extends Controller
         $request->validateWithBag('createSurvey', [
             'title' => 'required',
             'description' => 'required',
-            'status' => 'required',
             'is_active' => 'nullable',
-            'variation_values' => 'required',
-            'variation_values.*.*' => 'required',
-            'variation_values.quantity.*' => 'integer',
-            'variation_values.price.*' => 'integer',
-            'variation_values.sku.*' => 'integer',
         ]);
 
         try {
             DB::beginTransaction();
 
-            Survey::create([
+            $survey = Survey::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'status' => '1',
                 'is_active' => $request->is_active
             ]);
 
+            $step = 0;
+
             // add questions
+            foreach ($request->question_titles as $question_title){
+                $step++;
+                $question = Question::create([
+                    'survey_id' => $survey->id,
+                    'step' => $step,
+                    'title' => $question_title['title'],
+                    'type' => 'option',
+                    'status' => '1'
+                ]);
+            }
+
+//            $responses = $request->question_responses;
+//
+//            foreach (){
+//                $first = array_slice($responses, $step, 4);
+//                $step++;
+//            }
 
             DB::commit();
         }catch (Exception $ex) {
@@ -74,7 +88,7 @@ class SurveyController extends Controller
             flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
         }
 
-        flash()->flash("success", 'با موفقیت به صفحات اضافه شد.', [], 'موفقیت آمیز');
+        flash()->flash("success", 'با موفقیت به پرسش نامه ها اضافه شد.', [], 'موفقیت آمیز');
         return redirect()->back();
     }
 

@@ -73,6 +73,9 @@
                                     <a class="dropdown-item" href="{{ route('surveys.edit', ['survey' => $survey]) }}">
                                         ویرایش
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('surveys.editQuestions', ['survey' => $survey]) }}">
+                                        ویرایش سوالات
+                                    </a>
                                     <button type="button" class="dropdown-item" data-toggle="modal"
                                         data-target="#deleteSurveyModal-{{ $survey->id }}">
                                         حذف

@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('survey_id');
             $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
-            $table->foreignId('question_id');
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->string('title');
-            $table->tinyInteger('status');
-            $table->boolean('is_active')->default(1);
+            $table->foreignId('answer_id');
+            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

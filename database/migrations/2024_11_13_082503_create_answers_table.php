@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->foreignId('response_id');
-            $table->foreign('response_id')->references('id')->on('responses')->onDelete('cascade');
+            $table->string('title');
+            $table->tinyInteger('status');
+            $table->boolean('is_active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

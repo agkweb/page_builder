@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->foreignId('survey_id');
             $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
-            $table->string('text');
+            $table->string('text')->nullable();
             $table->timestamps();
         });
     }

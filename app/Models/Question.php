@@ -7,6 +7,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,8 +21,28 @@ class Question extends Model
     protected $guarded = [];
     protected $table = "questions";
 
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::deleting(function ($question){
+            foreach ($question->answers as $answer){
+                $answer->delete();
+            }
+        });
+        static::restoring(function ($question){
+            foreach ($question->answers as $answer){
+                $answer->restore();
+            }
+        });
+    }
+
     public function survey(): BelongsTo
     {
         return $this->belongsTo(Survey::class);
+    }
+
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class);
     }
 }

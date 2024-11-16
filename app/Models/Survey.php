@@ -38,6 +38,9 @@ class Survey extends Model
         static::restoring(function ($survey){
             foreach ($survey->questions as $question){
                 $question->restore();
+                foreach ($question->answers as $answer){
+                    $answer->restore();
+                }
             }
         });
     }

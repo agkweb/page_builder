@@ -19,14 +19,6 @@ Route::resource('pages', PageController::class);
 Route::post('pages/{page}/restore', [PageController::class , 'restore'])->name('pages.restore');
 Route::get('pagesSearchFromTrash', [PageController::class , 'searchFromTrash'])->name('pages.searchFromTrash');
 
-Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.search');
-Route::get('surveys/trash', [SurveyController::class , 'trash'])->name('surveys.trash');
-Route::get('surveys/export/{survey}', [SurveyController::class , 'export'])->name('surveys.export');
-Route::post('surveys/export/{survey}', [SurveyController::class , 'exportInExcel'])->name('surveys.exportInExcel');
-Route::resource('surveys', SurveyController::class);
-Route::post('surveys/{survey}/restore', [SurveyController::class , 'restore'])->name('surveys.restore');
-Route::get('surveysSearchFromTrash', [SurveyController::class , 'searchFromTrash'])->name('surveys.searchFromTrash');
-
 Route::get('registrationsSearch', [RegistrationController::class , 'search'])->name('registrations.search');
 Route::resource('registrations', RegistrationController::class);
 
@@ -35,3 +27,12 @@ Route::get('categories/trash', [CategoryController::class , 'trash'])->name('cat
 Route::resource('categories', CategoryController::class);
 Route::post('categories/{category}/restore', [CategoryController::class , 'restore'])->name('categories.restore');
 Route::get('categoriesSearchFromTrash', [CategoryController::class , 'searchFromTrash'])->name('categories.searchFromTrash');
+
+Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.search');
+Route::get('surveys/trash', [SurveyController::class , 'trash'])->name('surveys.trash');
+Route::get('surveys/editQuestions/{survey}', [SurveyController::class , 'editQuestions'])->name('surveys.editQuestions');
+Route::get('surveys/export/{survey}', [SurveyController::class , 'export'])->name('surveys.export');
+Route::post('surveys/export/{survey}', [SurveyController::class , 'exportInExcel'])->name('surveys.exportInExcel');
+Route::resource('surveys', SurveyController::class);
+Route::post('surveys/{survey}/restore', [SurveyController::class , 'restore'])->name('surveys.restore');
+Route::get('surveysSearchFromTrash', [SurveyController::class , 'searchFromTrash'])->name('surveys.searchFromTrash');

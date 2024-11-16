@@ -43,11 +43,23 @@
                         <div class="col-12 col-md-12">
                             <div class="form-group d-flex row ">
                                 <label for="description" class="col-3">توضیحات:</label>
-                                <textarea class="form-control col-12" name="description" id="description" disabled>
-                                    {{ $survey->description }}
-                                </textarea>
+                                <textarea class="form-control col-12" name="description" id="description" disabled>{{ $survey->description }}</textarea>
                             </div>
                         </div>
+                        @foreach($survey->questions as $key => $question)
+                            <div class="row">
+                                <span class="col-12 col-lg-12 my-2">
+                                    <label>{{ $key + 1 . '.' }}نام سوال:</label>
+                                    <input type="text" class="form-control" value="{{ $question->title }}" disabled>
+                                </span>
+                                @foreach($question->answers as $answer)
+                                    <span class="col-12 col-lg-3 my-2">
+                                        <label>گزینه:</label>
+                                        <input type="text" class="form-control" value="{{ $answer->title }}" disabled>
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endforeach
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> ثبت</button>

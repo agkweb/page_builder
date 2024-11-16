@@ -55,24 +55,23 @@
                                         <div class="row">
                                             <span class="col-12 col-lg-12 my-2">
                                                 <label for="question_title">نام سوال: *</label>
-                                                <input id="question_title" type="text" name="question_titles[][title]" class="form-control">
+                                                <input id="question_title" type="text" name="questions[0][question]" class="form-control">
                                             </span>
-
                                             <span class="col-12 col-lg-3 my-2">
                                                 <label>گزینه اول: *</label>
-                                                <input type="text" name="question_responses[][first]" class="form-control" required>
+                                                <input type="text" name="questions[0][answers][]" class="form-control" required>
                                             </span>
                                             <span class="col-12 col-lg-3 my-2">
                                                 <label>گزینه دوم: </label>
-                                                <input type="text" name="question_responses[][second]" class="form-control">
+                                                <input type="text" name="questions[0][answers][]" class="form-control">
                                             </span>
                                             <span class="col-12 col-lg-3 my-2">
                                                 <label>گزینه سوم: </label>
-                                                <input type="text" name="question_responses[][third]" class="form-control">
+                                                <input type="text" name="questions[0][answers][]" class="form-control">
                                             </span>
                                             <span class="col-12 col-lg-3 my-2">
                                                 <label>گزینه چهارم: </label>
-                                                <input type="text" name="question_responses[][fourth]" class="form-control">
+                                                <input type="text" name="questions[0][answers][]" class="form-control">
                                             </span>
                                         </div>
                                     </div>

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @method static latest()
- * @method static findOrFail(mixed $page_id)
+ * @method static where(string $string, $id)
  */
 class Response extends Model
 {
@@ -17,8 +16,13 @@ class Response extends Model
     protected $guarded = [];
     protected $table = "responses";
 
-    public function question(): BelongsTo
+    public function survey(): BelongsTo
     {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Survey::class);
+    }
+
+    public function answer(): BelongsTo
+    {
+        return $this->belongsTo(Answer::class);
     }
 }

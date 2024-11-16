@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static latest()
  * @method static findOrFail(mixed $page_id)
+ * @method static create(array $array)
  */
 class Answer extends Model
 {

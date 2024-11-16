@@ -10,7 +10,7 @@
 
 @section('content')
     <ol class="breadcrumb" style="direction: ltr;justify-content: right;">
-        <li class="breadcrumb-item active">نمایش پرسش نامه: {{ $survey->title }}</li>
+        <li class="breadcrumb-item active">ویرایش پرسش نامه: {{ $survey->title }}</li>
         <li class="breadcrumb-item"><a href="#">مدیریت</a>
         </li>
     </ol>
@@ -20,20 +20,20 @@
             <div class="col-sm-12">
                 <div class="card" style="text-align: start;">
                     <div class="card-header">
-                        <strong>نمایش پرسش نامه: {{ $survey->title }}</strong>
+                        <strong>ویرایش پرسش نامه: {{ $survey->title }}</strong>
                     </div>
                     <div class="card-block d-flex row">
                         <div class="col-12 col-md-6">
                             <div class="form-group d-flex row ">
                                 <label for="title" class="col-3">عنوان:</label>
-                                <input type="text" class="form-control col-8" id="title" value="{{ $survey->title }}" disabled>
+                                <input type="text" class="form-control col-8" id="title" value="{{ $survey->title }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label class="col-md-3 form-control-label px-0 pt-1" for="select">فعال:</label>
                                 <div class="col-md-9">
-                                    <select id="is_active" name="is_active" class="form-control input-lg" disabled>
+                                    <select id="is_active" name="is_active" class="form-control input-lg">
                                         <option {{ $survey->is_active == 1 ? 'selected' : '' }}>فعال</option>
                                         <option {{ $survey->is_active == 0 ? 'selected' : '' }}>غیرفعال</option>
                                     </select>
@@ -43,9 +43,7 @@
                         <div class="col-12 col-md-12">
                             <div class="form-group d-flex row ">
                                 <label for="description" class="col-3">توضیحات:</label>
-                                <textarea class="form-control col-12" name="description" id="description" disabled>
-                                    {{ $survey->description }}
-                                </textarea>
+                                <textarea class="form-control col-12" name="description" id="description">{{ $survey->description }}</textarea>
                             </div>
                         </div>
                     </div>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Question;
 use App\Models\Registration;
+use App\Models\Response;
 use App\Models\Survey;
 use Carbon\Carbon;
 use Exception;
@@ -44,11 +46,10 @@ class SurveyController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
         $request->validateWithBag('createSurvey', [
             'title' => 'required',
             'description' => 'required',
-            'is_active' => 'nullable',
+            'is_active' => 'required',
         ]);
 
         try {
@@ -62,26 +63,25 @@ class SurveyController extends Controller
             ]);
 
             $step = 0;
-
-            // add questions
-            foreach ($request->question_titles as $question_title){
+            foreach ($request->questions as $questionData){
                 $step++;
                 $question = Question::create([
                     'survey_id' => $survey->id,
                     'step' => $step,
-                    'title' => $question_title['title'],
+                    'title' => $questionData['question'],
                     'type' => 'option',
                     'status' => '1'
                 ]);
+                foreach ($questionData['answers'] as $answer){
+                    if ($answer){
+                        Answer::create([
+                            'question_id' => $question->id,
+                            'title' => $answer,
+                            'status' => 1
+                        ]);
+                    }
+                }
             }
-
-//            $responses = $request->question_responses;
-//
-//            foreach (){
-//                $first = array_slice($responses, $step, 4);
-//                $step++;
-//            }
-
             DB::commit();
         }catch (Exception $ex) {
             DB::rollBack();
@@ -103,50 +103,67 @@ class SurveyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Survey $survey)
+    public function edit(Survey $survey): View|Factory|Application
     {
-        return view('surveys.update', compact('survey'));
+        return view('surveys.edit', compact('survey'));
+    }
+
+    public function editQuestions(Survey $survey): View|Factory|Application
+    {
+        return view('surveys.editQuestions', compact('survey'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Page $page): RedirectResponse
+    public function update(Request $request, Survey $survey): RedirectResponse
     {
-//        $validator = Validator::make($request->all(), [
-//            'title' => 'required|min:3',
-//            'category_id' => 'required',
-//            'html' => 'required|string',
-//            'css' => 'required|string'
-//        ]);
-//
-//        if($validator->fails()){
-//            return back()->withErrors($validator, 'updatePage')->withInput()->with(['page_id' => $page->id]);
-//        }
-//
-//        try {
-//            DB::beginTransaction();
-//
-//            $hasForm = containsForm($request->html);
-//
-//            $page->update([
-//                'title' => $request->title,
-//                'category_id' => $request->category_id,
-//                'user_id' => '1',
-//                'html' => $request->html,
-//                'css' => $request->css,
-//                'status' => $hasForm ? 2 : 1,
-//            ]);
-//
-//            DB::commit();
-//        }catch (Exception $ex) {
-//            DB::rollBack();
-//            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
-//            return redirect()->back();
-//        }
-//
-//        flash()->flash("success", 'صفحه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-//        return redirect()->back();
+        $request->validateWithBag('updateSurvey', [
+            'title' => 'required',
+            'description' => 'required',
+            'is_active' => 'nullable',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $survey->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'status' => '1',
+                'is_active' => $request->is_active
+            ]);
+
+            foreach ($request->questions as $questionId => $questionData){
+                $step++;
+                $question = Question::create([
+                    'survey_id' => $survey->id,
+                    'step' => $step,
+                    'title' => $questionData['question'],
+                    'type' => 'option',
+                    'status' => '1'
+                ]);
+                foreach ($questionData['answers'] as $answer){
+                    if ($answer){
+                        Answer::create([
+                            'question_id' => $question->id,
+                            'survey_id' => $survey->id,
+                            'title' => $answer,
+                            'status' => 1
+                        ]);
+                    }
+                }
+            }
+
+            DB::commit();
+        }catch (Exception $ex) {
+            DB::rollBack();
+            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
+            return redirect()->back();
+        }
+
+        flash()->flash("success", 'صفحه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
     }
 
     public function destroy(Survey $survey): RedirectResponse
@@ -191,61 +208,49 @@ class SurveyController extends Controller
         return redirect()->back();
     }
 
-    public function export(Survey $survey)
+    public function export(Survey $survey): Application|Factory|View|RedirectResponse
     {
-        if ($survey->status != 2){
-            flash()->flash("warning", 'پرسش نامه مورد نظر فرم ندارد!', [], 'پرسش نامه اشتباه!');
-            return redirect()->back();
-        }else{
-            return view('surveys.export', compact('survey'));
-        }
+        return view('surveys.export', compact('survey'));
     }
 
-    public function exportInExcel(Request $request, Page $page): StreamedResponse
+    public function exportInExcel(Request $request, Survey $survey): StreamedResponse
     {
-//        $request->validate([
-//            'start' => 'required',
-//            'end' => 'required',
-//        ]);
-//
-//        $fileName = 'registrations.csv';
-//
-//        $registrations = Registration::where('page_id', $page->id)->whereBetween('created_at',[convertToGregorianDate($request->start), convertToGregorianDate($request->end)])->get();
-//
-//        $headers = [
-//            "Content-type"        => "text/csv",
-//            "Content-Disposition" => "attachment; filename=$fileName",
-//            "Pragma"              => "no-cache",
-//            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-//            "Expires"             => "0"
-//        ];
-//
-//        $callback = function() use ($registrations,) {
-//            $columns = ['آیدی', 'نام و نام خانوادگی', 'شماره تلفن', 'ایمیل', 'مدرک', 'رشته', 'دانشگاه', 'استان', 'شهر', 'تاریخ ایجاد رکورد'];
-//            $file = fopen('php://output', 'w');            // Adding BOM to ensure UTF-8 support in Excel
-//            fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
-//            fputcsv($file, $columns);
-//
-//            foreach ($registrations as $registration) {
-//                $row = [
-//                    $registration->id,
-//                    $registration->fullname,
-//                    $registration->phone_number,
-//                    $registration->email,
-//                    $registration->license,
-//                    $registration->major,
-//                    $registration->university,
-//                    $registration->province ? $registration->province->name : '',
-//                    $registration->city ? $registration->city->name : '',
-//                    verta($registration->created_at),
-//                ];
-//
-//                fputcsv($file, $row);
-//            }
-//
-//            fclose($file);
-//        };
-//
-//        return response()->stream($callback, 200, $headers);
+        $request->validate([
+            'start' => 'required',
+            'end' => 'required',
+        ]);
+
+        $fileName = 'surveys.csv';
+
+        $responses = Response::where('survey_id', $survey->id)->whereBetween('created_at',[convertToGregorianDate($request->start), convertToGregorianDate($request->end)])->get();
+
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $callback = function() use ($responses,) {
+            $columns = ['آیدی', 'پاسخ', 'تاریخ ایجاد رکورد'];
+            $file = fopen('php://output', 'w');
+            fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
+            fputcsv($file, $columns);
+
+            foreach ($responses as $response) {
+                $row = [
+                    $response->id,
+                    $response->answer->title,
+                    verta($response->created_at),
+                ];
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

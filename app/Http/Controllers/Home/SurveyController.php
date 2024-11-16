@@ -100,6 +100,11 @@ class SurveyController extends Controller
         return view('surveys/show', compact('survey'));
     }
 
+    public function preview(Survey $survey): View|Factory|Application
+    {
+        return view('surveys/preview', compact('survey'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

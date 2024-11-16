@@ -31,6 +31,7 @@ Route::get('categoriesSearchFromTrash', [CategoryController::class , 'searchFrom
 Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.search');
 Route::get('surveys/trash', [SurveyController::class , 'trash'])->name('surveys.trash');
 Route::get('surveys/editQuestions/{survey}', [SurveyController::class , 'editQuestions'])->name('surveys.editQuestions');
+Route::get('surveys/preview/{survey}', [SurveyController::class , 'preview'])->name('surveys.preview');
 Route::get('surveys/export/{survey}', [SurveyController::class , 'export'])->name('surveys.export');
 Route::post('surveys/export/{survey}', [SurveyController::class , 'exportInExcel'])->name('surveys.exportInExcel');
 Route::resource('surveys', SurveyController::class);

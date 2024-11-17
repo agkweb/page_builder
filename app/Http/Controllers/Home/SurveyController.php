@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -102,6 +103,7 @@ class SurveyController extends Controller
 
     public function preview(Survey $survey): View|Factory|Application
     {
+        $survey = Survey::with('questions.answers')->findOrFail($survey->id);
         return view('surveys/preview', compact('survey'));
     }
 
@@ -116,6 +118,12 @@ class SurveyController extends Controller
     public function editQuestions(Survey $survey): View|Factory|Application
     {
         return view('surveys.editQuestions', compact('survey'));
+    }
+
+    public function getQuestions(Survey $survey): JsonResponse
+    {
+        $survey = Survey::with('questions.answers')->findOrFail($survey->id);
+        return response()->json($survey);
     }
 
     /**
@@ -237,7 +245,7 @@ class SurveyController extends Controller
             "Expires"             => "0"
         ];
 
-        $callback = function() use ($responses,) {
+        $callback = function() use ($responses) {
             $columns = ['آیدی', 'پاسخ', 'تاریخ ایجاد رکورد'];
             $file = fopen('php://output', 'w');
             fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));

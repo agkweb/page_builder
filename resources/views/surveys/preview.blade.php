@@ -16,16 +16,17 @@
         <div class="quiz-head">
             <h1 class="quiz-title">عنوان پرسش نامه</h1>
         </div>
-        <div class="quiz-body">
-            <h2 class="quiz-question" id="question">... تو اگه با من قهری</h2>
-            <ul class="quiz-options text-right">
-                <li>من که آشتیم</li>
-                <li>من که دوستتم</li>
-                <li>بیا قهر نباشیم</li>
-                <li>به درک که قهری</li>
-            </ul>
-            <div id="result"></div>
-        </div>
+        @foreach($survey->questions as $question)
+            <div class="quiz-body">
+                <h2 class="quiz-question" style="direction: rtl" id="question">{{ $question->title }}</h2>
+                <ul class="quiz-options text-right">
+                    @foreach($question->answers as $answer)
+                        <li style="text-align: center">{{ $answer->title }}</li>
+                    @endforeach
+                </ul>
+                <div id="result"></div>
+            </div>
+        @endforeach
         <div class="quiz-foot">
             <button type="button" id="check-answer">ثبت پاسخ</button>
             <button type="button" id="play-again">Play Again!</button>

@@ -120,12 +120,6 @@ class SurveyController extends Controller
         return view('surveys.editQuestions', compact('survey'));
     }
 
-    public function getQuestions(Survey $survey): JsonResponse
-    {
-        $survey = Survey::with('questions.answers')->findOrFail($survey->id);
-        return response()->json($survey);
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -181,6 +175,14 @@ class SurveyController extends Controller
 
     public function destroy(Survey $survey): RedirectResponse
     {
+        $survey->delete();
+        flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
+    }
+
+    public function save(Request $request): RedirectResponse
+    {
+        dd($request->all());
         $survey->delete();
         flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
         return redirect()->back();

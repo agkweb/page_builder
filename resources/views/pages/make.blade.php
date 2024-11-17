@@ -3,37 +3,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- cdn -->
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/lib/popper.min.js"></script>
-    <link rel="stylesheet" href="/css/grapes.min.css">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/grapesjs.min.js"></script>
-    <script src="/js/grapesjs-blocks-basic.js"></script>
-    <script src="/js/grapesjs-plugin-forms.js"></script>
-    <script src="/js/gjs.init.js"></script>
-    <script src="/js/index.min.js"></script>
-    <script src="/js/micromodal.min.js"></script>
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet" /> -->
-    <!-- <script src="js/bootstrap.min.js"></script> -->
 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-    <!-- custom -->
-
-    <link rel="stylesheet" href="/css/sepectre.min.css">
-    <link rel="stylesheet" href="/css/spectre-exp.min.css">
-
-    <link rel="stylesheet" href="/css/modal.css">
-    <link rel="stylesheet" href="/css/custom.css">
-    <script src="/js/gjs.blocks.js"></script>
-    <script src="/js/gjs.traits.js"></script>
-    <script src="/js/gjs.components.js"></script>
-    <script src="/js/gjs.commands.js"></script>
-    <script src="/js/gjs.rte.js"></script>
-    <script src="/js/custom.js"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/lib/popper.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/grapes.min.css') }}">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/grapesjs.min.js') }}"></script>
+    <script src="{{ asset('js/grapesjs-blocks-basic.js') }}"></script>
+    <script src="{{ asset('js/grapesjs-plugin-forms.js') }}"></script>
+    <script src="{{ asset('js/gjs.init.js') }}"></script>
+    <script src="{{ asset('js/index.min.js') }}"></script>
+    <script src="{{ asset('js/micromodal.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/sepectre.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/spectre-exp.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <script src="{{ asset('js/gjs.blocks.js') }}"></script>
+    <script src="{{ asset('js/gjs.traits.js') }}"></script>
+    <script src="{{ asset('js/gjs.components.js') }}"></script>
+    <script src="{{ asset('js/gjs.commands.js') }}"></script>
+    <script src="{{ asset('js/gjs.rte.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
 </head>
 <body>
 <form action="{{ route('pages.store') }}" id="pageData" method="POST" style="display: none;">

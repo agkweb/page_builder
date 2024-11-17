@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
     <link rel="stylesheet" href="/panel/bootstrap-4.6.2-dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="/panel/css/survey.css" rel="stylesheet" />
+    <link href="{{ asset('assets/panel/css/survey.css') }}" rel="stylesheet" />
     <title>کارنامه های برتر</title>
 </head>
 
@@ -16,17 +16,16 @@
         <div class="quiz-head">
             <h1 class="quiz-title">عنوان پرسش نامه</h1>
         </div>
-        @foreach($survey->questions as $question)
-            <div class="quiz-body">
-                <h2 class="quiz-question" style="direction: rtl" id="question">{{ $question->title }}</h2>
-                <ul class="quiz-options text-right">
-                    @foreach($question->answers as $answer)
-                        <li style="text-align: center">{{ $answer->title }}</li>
-                    @endforeach
-                </ul>
-                <div id="result"></div>
-            </div>
-        @endforeach
+        <div class="quiz-body">
+            <h2 class="quiz-question" id="question">... تو اگه با من قهری</h2>
+            <ul class="quiz-options text-right">
+                <li>من که آشتیم</li>
+                <li>من که دوستتم</li>
+                <li>بیا قهر نباشیم</li>
+                <li>به درک که قهری</li>
+            </ul>
+            <div id="result"></div>
+        </div>
         <div class="quiz-foot">
             <button type="button" id="check-answer">ثبت پاسخ</button>
             <button type="button" id="play-again">Play Again!</button>
@@ -37,8 +36,8 @@
     </div>
 </div>
 
-<script src="/panel/bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
-<script src="/panel/js/survey.js"></script>
+<script src="{{ asset('assets/panel/bootstrap-4.6.2-dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/panel/js/survey.js') }}"></script>
 
 </body>
 </html>

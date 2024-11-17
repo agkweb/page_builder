@@ -10,7 +10,6 @@
         "cviebrock/eloquent-sluggable": "^11.0",
         "hekmatinasser/verta": "^8.4",
         "laravel/framework": "^11.9",
-        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "php-flasher/flasher-laravel": "^2.1"
     },

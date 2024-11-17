@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('layout.main');
 });
 
+Route::get('/surveys/{survey}/questions', [SurveyController::class, 'getQuestions']);
+
 Route::post('pages/upload/images', [PageController::class, 'upload']);
 Route::get('pagesSearch', [PageController::class , 'search'])->name('pages.search');
 Route::get('pages/trash', [PageController::class , 'trash'])->name('pages.trash');

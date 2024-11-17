@@ -11,7 +11,61 @@ const _totalQuiz = document.getElementById('total-quiz');
 const _currentQuestion = document.getElementById('current-question'); 
 const _totalQuestions = document.getElementById('total-questions');
 
+$(document).ready(function(){ 
+    loadQuestions(); 
+    _nextQuestionBtn.addEventListener('click', function(){ 
+        if(currentQuiz < totalQuiz - 1) { 
+            currentQuiz++; 
+            showQuestion(quizzes[currentQuiz]); 
+            updateCounter(); 
+        } else { 
+            _result.innerHTML = `<p>پرسش‌نامه به پایان رسید.</p>`; 
+            _nextQuestionBtn.style.display = 'none'; 
+        } 
+        _currentQuiz.textContent = currentQuiz + 1;
+     });
+});
 
+
+function loadQuestions(){ 
+    $.ajax({ 
+        url: 'http://localhost:8000/surveys/1/questions', 
+        method: 'GET', 
+        success: function(data) { 
+            quizzes = data; 
+            console.log(data);
+            totalQuiz = quizzes.length; 
+            _totalQuiz.textContent = totalQuiz; 
+            _totalQuestions.textContent = totalQuiz; 
+            showQuestion(quizzes[currentQuiz]); 
+            updateCounter(); 
+        } 
+    });
+ }
+ 
+
+
+
+ function showQuestion(data){ 
+    _question.innerHTML = data.question; 
+    _options.innerHTML = JSON.parse(data.options).map((option, index) => ` <li>${index + 1}. <span>${option}</span></li> `).join(''); selectOption(); 
+}
+
+function selectOption(){ 
+    _options.querySelectorAll('li').forEach(function(option){ 
+        option.addEventListener('click', function(){ 
+            if(_options.querySelector('.selected')){ 
+                const activeOption = _options.querySelector('.selected'); 
+                activeOption.classList.remove('selected'); 
+            } 
+            option.classList.add('selected'); 
+        }); 
+    }); 
+}
+
+function updateCounter(){ 
+    _currentQuestion.textContent = currentQuiz + 1; 
+}
 
 
 
@@ -43,15 +97,15 @@ const _totalQuestions = document.getElementById('total-questions');
 // let correctAnswer = "", correctScore = askedCount = 0, totalQuestion = 10;
 
 // // load question from API
-// // async function loadQuestion(){
-// //     const APIUrl = 'https://opentdb.com/api.php?amount=1';
-// //     const result = await fetch(`${APIUrl}`)
-// //     const data = await result.json();
-// //     // _result.innerHTML = "";
-// //     showQuestion(data.results[0]);
-// //     console.log(data);
-// // }
-// // loadQuestion()
+// async function loadQuestion(){
+//     const APIUrl = 'http://localhost:8000/surveys/1/questions';
+//     const result = await fetch(`${APIUrl}`)
+//     const data = await result.json();
+//     // _result.innerHTML = "";
+//     showQuestion(data.results[0]);
+//     console.log(data);
+// }
+// loadQuestion()
 // // event listeners
 // function eventListeners(){
 //     _checkBtn.addEventListener('click', checkAnswer);

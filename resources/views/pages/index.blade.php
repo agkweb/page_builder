@@ -251,11 +251,11 @@
         {{ $pages->links('vendor.pagination.bootstrap-4')}}
     </div>
 </div>
-<script>
-    function filterSearch() {
-        $('#filter').submit();
-    }
-</script>
+{{--<script>--}}
+{{--    function filterSearch() {--}}
+{{--        $('#filter').submit();--}}
+{{--    }--}}
+{{--</script>--}}
 @endsection
 
 @section('scripts')

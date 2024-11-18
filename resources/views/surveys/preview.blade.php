@@ -53,20 +53,39 @@
     $(document).ready(function(){
         showQuestion(quizzes[currentQuiz]);
         _nextQuestionBtn.addEventListener('click', function(){
-            console.log(quizzes[currentQuiz])
             if(currentQuiz < totalQuiz - 1) {
-                currentQuiz++;
-                showQuestion(quizzes[currentQuiz]);
-                updateCounter();
-            } else {
+                const activeOption = _options.querySelector('.selected');
                 $.ajax({
                     url: '{{ route('surveys.save') }}',
                     type: 'post',
                     data: {
                         survey_data: [
-                            { survey_id: 1 },
-                            { question_id: 1 },
-                            { answer_id: 1 }
+                            { survey_id: quizzes[currentQuiz].survey_id },
+                            { question_id: quizzes[currentQuiz].id },
+                            { answer_id: activeOption.id }
+                        ]
+                    },
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+                currentQuiz++;
+                showQuestion(quizzes[currentQuiz]);
+                updateCounter();
+            } else {
+                const activeOption = _options.querySelector('.selected');
+                $.ajax({
+                    url: '{{ route('surveys.save') }}',
+                    type: 'post',
+                    data: {
+                        survey_data: [
+                            { survey_id: quizzes[currentQuiz].survey_id },
+                            { question_id: quizzes[currentQuiz].id },
+                            { answer_id: activeOption.id }
                         ]
                     },
                     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -87,7 +106,7 @@
     function showQuestion(data){
         _question.innerHTML = data.title;
         _options.innerHTML = data.answers.map((answers, index) =>
-            ` <li>${index + 1}. <span>${answers.title}</span></li> `).join(''); selectOption();
+            ` <li id="${answers.id}">${index + 1}. <span>${answers.title}</span></li> `).join(''); selectOption();
     }
 
     function selectOption(){

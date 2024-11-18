@@ -91,7 +91,7 @@ class SurveyController extends Controller
         }
 
         flash()->flash("success", 'با موفقیت به پرسش نامه ها اضافه شد.', [], 'موفقیت آمیز');
-        return redirect()->back();
+        return redirect()->route('surveys.index');
     }
 
     /**
@@ -170,8 +170,8 @@ class SurveyController extends Controller
             return redirect()->back();
         }
 
-        flash()->flash("success", 'صفحه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-        return redirect()->back();
+        flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
+        return redirect()->route('surveys.index');
     }
 
     public function destroy(Survey $survey): RedirectResponse

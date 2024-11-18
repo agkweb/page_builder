@@ -81,7 +81,7 @@ class PageController extends Controller
         }
 
         flash()->flash("success", 'با موفقیت به صفحات اضافه شد.', [], 'موفقیت آمیز');
-        return redirect()->back();
+        return redirect()->route('pages.index');
     }
 
     /**
@@ -155,7 +155,7 @@ class PageController extends Controller
         }
 
         flash()->flash("success", 'صفحه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-        return redirect()->back();
+        return redirect()->route('pages.index');
     }
 
     public function destroy(Page $page): RedirectResponse
@@ -238,40 +238,6 @@ class PageController extends Controller
         }else{
             return view('pages.export', compact('page'));
         }
-//        $fileName = 'registrations.csv';
-//
-//        $registrations = Registration::all();
-//
-//        $headers = [
-//            "Content-type"        => "text/csv",
-//            "Content-Disposition" => "attachment; filename=$fileName",
-//            "Pragma"              => "no-cache",
-//            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-//            "Expires"             => "0"
-//        ];
-//
-//        $columns = ['ID', 'fullname', 'phone_number', 'Created At', 'Updated At'];
-//
-//        $callback = function() use ($registrations, $columns) {
-//            $file = fopen('php://output', 'w');
-//            fputcsv($file, $columns);
-//
-//            foreach ($registrations as $registration) {
-//                $row = [
-//                    $registration->id,
-//                    $registration->page_id,
-//                    $registration->fullname,
-//                    $registration->created_at,
-//                    $registration->updated_at
-//                ];
-//
-//                fputcsv($file, $row);
-//            }
-//
-//            fclose($file);
-//        };
-//
-//        return response()->stream($callback, 200, $headers);
     }
 
     public function exportInExcel(Request $request, Page $page): StreamedResponse

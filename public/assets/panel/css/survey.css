@@ -33,7 +33,7 @@ body{
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
     position: relative;
-    box-shadow: 0 4px 6px rgb(0 0 0 / 10%), 0 1px 3px rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 53%), 0 1px 3px rgb(0 0 0 / 0%);
 }
 .quiz-title{
     text-align: center;

@@ -180,10 +180,14 @@ class SurveyController extends Controller
         return redirect()->back();
     }
 
-    public function save(Request $request)
+    public function save(Request $request): void
     {
-        $data = $request->all();
-        return $data;
+        $surveyData = $request->input('survey_data');
+        Response::create([
+            'survey_id' => $surveyData[0]['survey_id'],
+            'question_id' => $surveyData[1]['question_id'],
+            'answer_id' => $surveyData[2]['answer_id'],
+        ]);
     }
 
     public function search(): Factory|View|Application

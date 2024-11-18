@@ -62,28 +62,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2 row d-flex justify-content-center" id="questions">
-                            <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    سوال اول
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#">ویرایش</a>
-                                    <a class="dropdown-item" href="#">حذف</a>
-                                </div>
-                            </div>
-                        </div>
-                        
+
                     </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> ثبت</button>
-                    <a href="{{ route('surveys.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>
-                        بازگشت</a>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> ثبت</button>
+                        <a href="{{ route('surveys.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> بازگشت</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

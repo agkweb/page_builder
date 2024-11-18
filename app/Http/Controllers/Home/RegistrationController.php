@@ -70,59 +70,6 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-//    public function update(Request $request, PageForm $pageForm): RedirectResponse
-//    {
-//        $validator = Validator::make($request->all(), [
-//            'page_id' => 'required',
-//            'fullname' => 'nullable|string',
-//            'phone_number' => 'required|string',
-//            'email' => 'nullable|email',
-//            'degree' => 'nullable|string',
-//            'field' => 'nullable|string',
-//            'university_name' => 'nullable|string',
-//            'province_id' => 'nullable',
-//            'city_id' => 'nullable',
-//            'attachment' => [
-//                'nullable',
-//                File::types(['pdf', 'jpg'])
-//                    ->max('5mb'),
-//            ],
-//        ]);
-//
-//        if($validator->fails()){
-//            return back()->withErrors($validator, 'updatePageForm')->withInput()->with(['pageForm_id' => $pageForm->id]);
-//        }
-//
-//        try {
-//            DB::beginTransaction();
-//
-//            $existedData = array_filter($request->all(), function ($value){
-//                return !is_null($value);
-//            });
-//
-//            $pageForm->update($existedData);
-//
-//            DB::commit();
-//        }catch (Exception $ex) {
-//            DB::rollBack();
-//            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
-//            return redirect()->back();
-//        }
-//
-//        flash()->flash("success", 'اطلاعات مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-//        return redirect()->back();
-//    }
-//
-//    public function destroy(PageForm $pageForm): RedirectResponse
-//    {
-//        $pageForm->delete();
-//        flash()->flash("success", 'اطلاعات مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
-//        return redirect()->back();
-//    }
-
     public function search(): Factory|View|Application
     {
         $keyword = request()->keyword;

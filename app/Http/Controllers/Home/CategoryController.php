@@ -62,7 +62,7 @@ class CategoryController extends Controller
         }
 
         flash()->flash("success", 'با موفقیت به دسته بندی ها اضافه شد.', [], 'موفقیت آمیز');
-        return redirect()->back();
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -115,7 +115,7 @@ class CategoryController extends Controller
         }
 
         flash()->flash("success", 'دسته بندی مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-        return redirect()->back();
+        return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category): RedirectResponse

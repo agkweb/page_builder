@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\Registration;
 use App\Models\Response;
 use App\Models\Survey;
+use App\Models\SurveyUser;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -187,6 +188,18 @@ class SurveyController extends Controller
             'survey_id' => $surveyData[0]['survey_id'],
             'question_id' => $surveyData[1]['question_id'],
             'answer_id' => $surveyData[2]['answer_id'],
+        ]);
+    }
+
+    public function add_phoneNumber(Request $request): void
+    {
+        $request->validate([
+            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
+            'survey_id' => 'required',
+        ]);
+        SurveyUser::create([
+            'phone_number' => $request->phone_number,
+            'survey_id' => $request->survey_id
         ]);
     }
 

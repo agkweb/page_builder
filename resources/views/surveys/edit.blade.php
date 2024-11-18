@@ -46,6 +46,13 @@
                                 <textarea class="form-control col-12" name="description" id="description">{{ $survey->description }}</textarea>
                             </div>
                         </div>
+                        <div class="col-12 col-md-12">
+                            <div class="form-group d-flex row ">
+                                <label for="description" class="col-3">توضیحات:</label>
+                                <textarea class="form-control col-12" name="description" id="description">{{ $survey->description }}</textarea>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> ثبت</button>

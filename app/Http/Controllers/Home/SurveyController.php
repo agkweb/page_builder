@@ -116,20 +116,17 @@ class SurveyController extends Controller
         return view('surveys.edit', compact('survey'));
     }
 
-    public function editQuestions(Survey $survey): View|Factory|Application
+    public function edit_question(Question $question): View|Factory|Application
     {
-        return view('surveys.editQuestions', compact('survey'));
+        return view('surveys.edit_question', compact('question'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Survey $survey): RedirectResponse
+    public function update_question(Request $request, Question $question): RedirectResponse
     {
-        $request->validateWithBag('updateSurvey', [
+        $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'is_active' => 'nullable',
+            'is_active' => 'required',
         ]);
 
         try {
@@ -138,11 +135,11 @@ class SurveyController extends Controller
             $survey->update([
                 'title' => $request->title,
                 'description' => $request->description,
-                'status' => '1',
                 'is_active' => $request->is_active
             ]);
 
-            foreach ($request->questions as $questionId => $questionData){
+            $step = 0;
+            foreach ($request->questions as $questionData){
                 $step++;
                 $question = Question::create([
                     'survey_id' => $survey->id,
@@ -155,7 +152,6 @@ class SurveyController extends Controller
                     if ($answer){
                         Answer::create([
                             'question_id' => $question->id,
-                            'survey_id' => $survey->id,
                             'title' => $answer,
                             'status' => 1
                         ]);
@@ -172,6 +168,67 @@ class SurveyController extends Controller
 
         flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
         return redirect()->route('surveys.index');
+    }
+
+    public function delete_question(Question $question): RedirectResponse
+    {
+        $question->delete();
+        flash()->flash("success", 'سوال مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Survey $survey): RedirectResponse
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'is_active' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $survey->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'is_active' => $request->is_active
+            ]);
+
+            if ($request->questions){
+                $step = 0;
+                foreach ($request->questions as $questionData){
+                    $step++;
+                    $question = Question::create([
+                        'survey_id' => $survey->id,
+                        'step' => $step,
+                        'title' => $questionData['question'],
+                        'type' => 'option',
+                        'status' => '1'
+                    ]);
+                    foreach ($questionData['answers'] as $answer){
+                        if ($answer){
+                            Answer::create([
+                                'question_id' => $question->id,
+                                'title' => $answer,
+                                'status' => 1
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+        }catch (Exception $ex) {
+            DB::rollBack();
+            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
+            return redirect()->back();
+        }
+
+        flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
     }
 
     public function destroy(Survey $survey): RedirectResponse

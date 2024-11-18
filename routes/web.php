@@ -31,6 +31,7 @@ Route::post('categories/{category}/restore', [CategoryController::class , 'resto
 Route::get('categoriesSearchFromTrash', [CategoryController::class , 'searchFromTrash'])->name('categories.searchFromTrash');
 
 Route::post('/submit-survey', [SurveyController::class , 'save'])->name('surveys.save');
+Route::post('/surveys/add_phoneNumber', [SurveyController::class , 'add_phoneNumber'])->name('surveys.add_phoneNumber');
 Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.search');
 Route::get('surveys/trash', [SurveyController::class , 'trash'])->name('surveys.trash');
 Route::get('surveys/editQuestions/{survey}', [SurveyController::class , 'editQuestions'])->name('surveys.editQuestions');

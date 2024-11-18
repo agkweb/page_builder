@@ -70,6 +70,9 @@
                                     <a class="dropdown-item" href="{{ route('surveys.show', ['survey' => $survey]) }}">
                                         نمایش
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('surveys.preview', ['survey' => $survey]) }}">
+                                        پیش نمایش
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('surveys.edit', ['survey' => $survey]) }}">
                                         ویرایش
                                     </a>

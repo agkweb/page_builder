@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('assets/panel/css/survey.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/panel/css/bootstrap-4.6.2-dist/bootstrap.css') }}" rel="stylesheet" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('assets/panel/js/libs/jquery.min.js') }}"></script>
     <title>{{ $survey->title }}</title>
@@ -16,7 +17,7 @@
             <div class="quiz-head">
                 <h1 class="quiz-title">{{ $survey->title }}</h1>
             </div>
-            <div class="quiz-body">
+            <div class="quiz-body" id="body">
                 <h2 class="quiz-question" id="question"></h2>
                 <ul class="quiz-options text-right" id="options"></ul>
                 <div id="result"></div>
@@ -96,7 +97,7 @@
                         console.log(xhr);
                     }
                 });
-                _result.innerHTML = `<p style="direction: rtl">پرسش‌نامه به پایان رسید.</p>`;
+                _result.innerHTML = `<form><input type="email" name="" id=""><button type="submit">ثبت اطلاعات</button></form>`;
                 _nextQuestionBtn.style.display = 'none';
             }
             _currentQuiz.textContent = currentQuiz + 1;
@@ -125,5 +126,6 @@
         _currentQuestion.textContent = currentQuiz + 1;
     }
 </script>
+<script src="{{ asset('assets/panel/js/libs/bootstrap-4.6.2-dist/bootstrap.min.js') }}"></script>
 </body>
 </html>

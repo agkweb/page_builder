@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static where(string $string, $id)
+ * @method static create(array $array)
  */
 class Response extends Model
 {

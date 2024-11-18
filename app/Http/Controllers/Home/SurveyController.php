@@ -180,12 +180,10 @@ class SurveyController extends Controller
         return redirect()->back();
     }
 
-    public function save(Request $request): RedirectResponse
+    public function save(Request $request)
     {
-        dd($request->all());
-        $survey->delete();
-        flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
-        return redirect()->back();
+        $data = $request->all();
+        return $data;
     }
 
     public function search(): Factory|View|Application

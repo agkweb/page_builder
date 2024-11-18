@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('assets/panel/css/survey.css') }}" rel="stylesheet" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('assets/panel/js/libs/jquery.min.js') }}"></script>
     <title>{{ $survey->title }}</title>
 </head>
@@ -52,11 +53,30 @@
     $(document).ready(function(){
         showQuestion(quizzes[currentQuiz]);
         _nextQuestionBtn.addEventListener('click', function(){
+            console.log(quizzes[currentQuiz])
             if(currentQuiz < totalQuiz - 1) {
                 currentQuiz++;
                 showQuestion(quizzes[currentQuiz]);
                 updateCounter();
             } else {
+                $.ajax({
+                    url: '{{ route('surveys.save') }}',
+                    type: 'post',
+                    data: {
+                        survey_data: [
+                            { survey_id: 1 },
+                            { question_id: 1 },
+                            { answer_id: 1 }
+                        ]
+                    },
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
                 _result.innerHTML = `<p style="direction: rtl">پرسش‌نامه به پایان رسید.</p>`;
                 _nextQuestionBtn.style.display = 'none';
             }

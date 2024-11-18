@@ -30,7 +30,7 @@ Route::resource('categories', CategoryController::class);
 Route::post('categories/{category}/restore', [CategoryController::class , 'restore'])->name('categories.restore');
 Route::get('categoriesSearchFromTrash', [CategoryController::class , 'searchFromTrash'])->name('categories.searchFromTrash');
 
-Route::post('surveys/save', [SurveyController::class , 'save'])->name('surveys.save');
+Route::post('/submit-survey', [SurveyController::class , 'save'])->name('surveys.save');
 Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.search');
 Route::get('surveys/trash', [SurveyController::class , 'trash'])->name('surveys.trash');
 Route::get('surveys/editQuestions/{survey}', [SurveyController::class , 'editQuestions'])->name('surveys.editQuestions');

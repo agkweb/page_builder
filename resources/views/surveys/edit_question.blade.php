@@ -30,21 +30,22 @@
                         @include('layout.errors')
                         <div class="col-12">
                             <div class="form-group d-flex row ">
-                                <label for="title" class="col-3">عنوان:</label>
-                                <input type="text" class="form-control col-8" id="title" name="title" value="{{ $question->title }}" required>
+                                <label for="title" class="col-1 mr-5" style="align-self: end;" >عنوان:</label>
+                                <input type="text" class="form-control col-9 mr-4" id="title" name="title" value="{{ $question->title }}" required>
                             </div>
                         </div>
                         @foreach($question->answers as $answer)
-                            <div class="col-12 col-md-6">
-                                <div class="form-group d-flex row">
-                                    <input type="text" class="form-control" name="answers[{{ $answer->id }}]" value="{{ $answer->title }}" required>
+                            <div class="col-12">
+                                <div class="form-group d-flex row col-12 justify-content-center">
+                                    <input type="text" class="form-control col-10" name="answers[{{ $answer->id }}]" value="{{ $answer->title }}" required>
+                                    <button class="btn btn-danger col-1 mx-1">حذف</button>
                                 </div>
                             </div>
                         @endforeach
-                            <div id="czContainer">
+                            <div id="czContainer" class="col-12">
                                 <div id="first" class="row">
-                                    <div class="recordset">
-                                        <span class="col-12 col-lg-12 my-2">
+                                    <div class="recordset d-flex">
+                                        <span class="col-10 my-2">
                                             <label>پاسخ جدید: </label>
                                             <input type="text" name="newAnswers[]" class="form-control">
                                         </span>

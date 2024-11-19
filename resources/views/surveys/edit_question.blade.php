@@ -22,6 +22,7 @@
                 <form action="{{ route('surveys.update_question', ['question' => $question]) }}" method="post">
                     <input type="hidden" name="survey_id" value="{{ $question->survey_id }}">
                     @csrf
+                    @method('put')
                     <div class="card-header">
                         <strong>ویرایش سوال: {{ $question->title }}</strong>
                     </div>

@@ -136,18 +136,20 @@ class SurveyController extends Controller
             ]);
 
             foreach ($request->answers as $key => $newAnswerTitle){
-                $answer = Answer::findOrFail($key)->first()->update([
+                Answer::findOrFail($key)->update([
                     'title' => $newAnswerTitle
                 ]);
             }
 
-//            foreach ($request->newAnswers as $newAnswer){
-//                Answer::create([
-//                   'question_id' => $request->survey_id,
-//                   'title' => $newAnswer,
-//                   'status' => '1'
-//                ]);
-//            }
+            if ($request->newAnswers != null){
+                foreach ($request->newAnswers as $newAnswer){
+                    Answer::create([
+                        'question_id' => $question->id,
+                        'title' => $newAnswer,
+                        'status' => '1'
+                    ]);
+                }
+            }
 
             DB::commit();
         }catch (Exception $ex) {

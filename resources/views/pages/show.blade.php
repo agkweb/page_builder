@@ -14,6 +14,7 @@
 
     <script>
         const nextBtn = document.querySelector('#nextForm');
+        document.querySelector('.form-step-2').style.display = "none";
         nextBtn.addEventListener('click', function() {
             document.querySelector('.form-step-1').style.display = 'none';
             document.querySelector('.form-step-2').style.display = 'block';

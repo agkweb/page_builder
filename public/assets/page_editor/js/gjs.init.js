@@ -527,15 +527,15 @@ $(document).ready(function () {
                 <h2>Step 1: Personal Information</h2>
                 <form class="form-step-1">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
-                    <button type="button" id="nextForm">Next</button>
+                    <input type="text" id="name" name="name" required>
+                    <button type="submit" id="nextForm">Next</button>
                 </form>
             </div>
-            <div class="form-step-2" style="display:none;">
+            <div class="form-step-2">
                 <h2>Step 2: Contact Information</h2>
                 <form>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" required>
                     <button type="submit">Submit</button>
                 </form>
             </div>

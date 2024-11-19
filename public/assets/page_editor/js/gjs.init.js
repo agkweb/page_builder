@@ -527,8 +527,8 @@ $(document).ready(function () {
                 <h2>Step 1: Personal Information</h2>
                 <form class="form-step-1">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    <button type="submit" id="nextForm">Next</button>
+                    <input type="tel" id="phone" name="phone" placeholder="09123456789" required>
+                    <button type="button" id="nextForm">Next</button>
                 </form>
             </div>
             <div class="form-step-2">

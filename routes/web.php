@@ -25,6 +25,7 @@ Route::prefix('pages/')->name('pages.')->group(function (){
 
 // REGISTRATIONS
 Route::get('registrationsSearch', [RegistrationController::class , 'search'])->name('registrations.search');
+Route::post('registrations/storePhoneNumber', [RegistrationController::class , 'storePhoneNumber'])->name('registrations.storePhoneNumber');
 Route::resource('registrations', RegistrationController::class);
 
 // CATEGORIES

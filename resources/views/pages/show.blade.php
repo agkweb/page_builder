@@ -13,11 +13,20 @@
     {!! $page->html !!}
 
     <script>
-        const nextBtn = document.querySelector('#nextForm');
         document.querySelector('.form-step-2').style.display = "none";
+        const nextBtn = document.querySelector('#nextForm');
+        const input_phone = document.querySelector('#phone')
         nextBtn.addEventListener('click', function() {
-            document.querySelector('.form-step-1').style.display = 'none';
-            document.querySelector('.form-step-2').style.display = 'block';
+            // const input_phone = document.querySelector('#name')
+            const phoneNumber = input_phone.value;
+            if (phoneNumber.length === 11 && phoneNumber.startsWith("09")) {
+                document.querySelector('.form-step-1').style.display = 'none';
+                console.log('efer')
+                document.querySelector('.form-step-2').style.display = 'block';
+            } else {
+                alert('لطفاً شماره تلفن صحیح وارد کنید.');
+            }
+
         });
     </script>
 </body>

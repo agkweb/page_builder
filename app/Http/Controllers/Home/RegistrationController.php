@@ -32,6 +32,37 @@ class RegistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function storePhoneNumber(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
+            'page_id' => 'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $registration = Registration::where('phone_number', $request->phone_number)->where('page_id', $request->page_id)->first();
+
+            if (!$registration){
+                Registration::create([
+                    'page_id' => $request->page_id,
+                    'phone_number' => $request->phone_number
+                ]);
+            }else{
+                flash()->flash("success", 'شما قبلا ثبت نام کردید.', [], 'ناموفق');
+            }
+
+            DB::commit();
+        }catch (Exception $ex) {
+            DB::rollBack();
+            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
+        }
+
+        flash()->flash("success", 'اطلاعات با موفقیت ذخیره شد.', [], 'موفقیت آمیز');
+        return redirect()->back();
+    }
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -54,11 +85,13 @@ class RegistrationController extends Controller
         try {
             DB::beginTransaction();
 
+            $registration = Registration::where('phone_number', $request->phone_number)->where('page_id', $request->page_id)->first();
+
             $existedData = array_filter($request->all(), function ($value){
                return !is_null($value);
             });
 
-            $registrations = Registration::create($existedData);
+            $registration->update($existedData);
 
             DB::commit();
         }catch (Exception $ex) {

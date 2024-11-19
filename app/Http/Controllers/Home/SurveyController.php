@@ -162,6 +162,13 @@ class SurveyController extends Controller
         return redirect()->back();
     }
 
+    public function delete_answer(Answer $answer): RedirectResponse
+    {
+        $answer->delete();
+        flash()->flash("success", 'پاسخ مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
+        return redirect()->back();
+    }
+
     public function delete_question(Question $question): RedirectResponse
     {
         $question->delete();

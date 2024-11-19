@@ -44,6 +44,7 @@ Route::prefix('surveys/')->name('surveys.')->group(function (){
     Route::get('edit_question/{question}', [SurveyController::class , 'edit_question'])->name('edit_question');
     Route::put('update_question/{question}', [SurveyController::class , 'update_question'])->name('update_question');
     Route::get('delete_question/{question}', [SurveyController::class , 'delete_question'])->name('delete_question');
+    Route::get('delete_answer/{answer}', [SurveyController::class , 'delete_answer'])->name('delete_answer');
     Route::post('add_phoneNumber', [SurveyController::class , 'add_phoneNumber'])->name('add_phoneNumber');
     Route::get('trash', [SurveyController::class , 'trash'])->name('trash');
     Route::post('{survey}/restore', [SurveyController::class , 'restore'])->name('restore');

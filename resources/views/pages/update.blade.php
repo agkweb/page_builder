@@ -4,26 +4,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- cdn -->
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/lib/popper.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/grapes.min.css') }}">
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/grapesjs.min.js') }}"></script>
-    <script src="{{ asset('js/grapesjs-blocks-basic.js') }}"></script>
-    <script src="{{ asset('js/grapesjs-plugin-forms.js') }}"></script>
-    <script src="{{ asset('js/gjs.init.js') }}"></script>
-    <script src="{{ asset('js/index.min.js') }}"></script>
-    <script src="{{ asset('js/micromodal.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/sepectre.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/spectre-exp.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    <script src="{{ asset('js/gjs.blocks.js') }}"></script>
-    <script src="{{ asset('js/gjs.traits.js') }}"></script>
-    <script src="{{ asset('js/gjs.components.js') }}"></script>
-    <script src="{{ asset('js/gjs.commands.js') }}"></script>
-    <script src="{{ asset('js/gjs.rte.js') }}"></script>
-    <script src="{{ asset('/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/lib/popper.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/page_editor/css/grapes.min.css') }}">
+    <script src="{{ asset('assets/page_editor/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/grapesjs.min.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/grapesjs-blocks-basic.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/grapesjs-plugin-forms.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/gjs.init.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/index.min.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/micromodal.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/page_editor/css/sepectre.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/page_editor/css/spectre-exp.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/page_editor/css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/page_editor/css/custom.css') }}">
+    <script src="{{ asset('assets/page_editor/js/gjs.blocks.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/gjs.traits.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/gjs.components.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/gjs.commands.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/gjs.rte.js') }}"></script>
+    <script src="{{ asset('assets/page_editor/js/custom.js') }}"></script>
 </head>
 <body>
 <form action="{{ route('pages.update', ['page' => $page]) }}" id="pageData" method="POST" style="display: none;">

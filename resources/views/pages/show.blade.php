@@ -13,10 +13,11 @@
     {!! $page->html !!}
 
     <script>
-        function nextStep() {
+        const nextBtn = document.querySelector('#nextForm');
+        nextBtn.addEventListener('click', function() {
             document.querySelector('.form-step-1').style.display = 'none';
             document.querySelector('.form-step-2').style.display = 'block';
-        }
+        });
     </script>
 </body>
 </html>

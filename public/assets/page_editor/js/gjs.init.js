@@ -519,33 +519,26 @@ $(document).ready(function () {
         editor.setStyle(cssCode);
     }, 1);
     // Add the block to the block manager
-    // editor.BlockManager.add('twoStepFormBlock', {
-    //     id: 'two-step-form',
-    //     label: 'Two Step Form',
-    //     content: `
-    //             <div class="form-step-1">
-    //                 <h2>Step 1: Personal Information</h2>
-    //                 <form>
-    //                     <label for="name">Name:</label>
-    //                     <input type="text" id="name" name="name">
-    //                     <button type="button" onclick="nextStep()">Next</button>
-    //                 </form>
-    //             </div>
-    //             <div class="form-step-2" style="display:none;">
-    //                 <h2>Step 2: Contact Information</h2>
-    //                 <form>
-    //                     <label for="email">Email:</label>
-    //                     <input type="email" id="email" name="email">
-    //                     <button type="submit">Submit</button>
-    //                 </form>
-    //             </div>
-    //             <script>
-    //                 function nextStep() {
-    //                     document.querySelector('.form-step-1').style.display = 'none';
-    //                     document.querySelector('.form-step-2').style.display = 'block';
-    //                 }
-    //             </script>
-    //         `,
-    //
-    // });
+    editor.BlockManager.add('twoStepFormBlock', {
+        id: 'two-step-form',
+        label: 'Two Step Form',
+        content: `
+            <div class="form-step-1" style="background: #0b2e13">
+                <h2>Step 1: Personal Information</h2>
+                <form class="form-step-1">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                    <button type="button" id="nextForm">Next</button>
+                </form>
+            </div>
+            <div class="form-step-2" style="display:none;">
+                <h2>Step 2: Contact Information</h2>
+                <form>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            `
+    });
 });

@@ -14,11 +14,12 @@
 
     <script>
         document.querySelector('.form-step-2').style.display = "none";
+        document.querySelector('#page_id').value = {{ $page->id }};
         const nextBtn = document.querySelector('#nextForm');
-        const input_phone = document.querySelector('#phone')
+        const input_phone_number = document.querySelector('#phone_number')
         nextBtn.addEventListener('click', function() {
             // const input_phone = document.querySelector('#name')
-            const phoneNumber = input_phone.value;
+            const phoneNumber = input_phone_number.value;
             if (phoneNumber.length === 11 && phoneNumber.startsWith("09")) {
                 document.querySelector('.form-step-1').style.display = 'none';
                 console.log('efer')

@@ -50,7 +50,7 @@
                 
                     <div class="col-12 row d-flex justify-content-start">
                         <label for="questions" class="col-12">سوالات:</label>
-                        <div class="col-2 row d-flex justify-content-center" id="questions">
+                        <div class="col-12 my-1 row d-flex justify-content-center" id="questions">
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,7 +62,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     </div>
                     <div class="card-footer">

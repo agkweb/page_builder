@@ -41,14 +41,14 @@ Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.
 Route::resource('surveys', SurveyController::class);
 Route::get('surveysSearchFromTrash', [SurveyController::class , 'searchFromTrash'])->name('surveys.searchFromTrash');
 Route::prefix('surveys/')->name('surveys.')->group(function (){
-    Route::get('{question}/edit', [SurveyController::class , 'edit_question'])->name('edit_question');
-    Route::post('{question}/update', [SurveyController::class , 'update_question'])->name('update_question');
-    Route::get('{question}/delete', [SurveyController::class , 'delete_question'])->name('delete_question');
+    Route::get('edit_question/{question}', [SurveyController::class , 'edit_question'])->name('edit_question');
+    Route::post('update_question/{question}', [SurveyController::class , 'update_question'])->name('update_question');
+    Route::get('delete_question/{question}', [SurveyController::class , 'delete_question'])->name('delete_question');
     Route::post('add_phoneNumber', [SurveyController::class , 'add_phoneNumber'])->name('add_phoneNumber');
     Route::get('trash', [SurveyController::class , 'trash'])->name('trash');
     Route::post('{survey}/restore', [SurveyController::class , 'restore'])->name('restore');
     Route::get('editQuestions/{survey}', [SurveyController::class , 'editQuestions'])->name('editQuestions');
-    Route::get('preview/{survey}', [SurveyController::class , 'preview'])->name('preview');
+    Route::get('preview/{survey:slug}', [SurveyController::class , 'preview'])->name('preview');
     Route::get('export/{survey}', [SurveyController::class , 'export'])->name('export');
     Route::post('export/{survey}', [SurveyController::class , 'exportInExcel'])->name('exportInExcel');
 });

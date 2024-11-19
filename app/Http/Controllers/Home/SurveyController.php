@@ -125,39 +125,29 @@ class SurveyController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
-            'is_active' => 'required',
+            'answers.*' => 'required',
         ]);
 
         try {
             DB::beginTransaction();
 
-            $survey->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'is_active' => $request->is_active
+            $question->update([
+                'title' => $request->title
             ]);
 
-            $step = 0;
-            foreach ($request->questions as $questionData){
-                $step++;
-                $question = Question::create([
-                    'survey_id' => $survey->id,
-                    'step' => $step,
-                    'title' => $questionData['question'],
-                    'type' => 'option',
-                    'status' => '1'
+            foreach ($request->answers as $key => $newAnswerTitle){
+                $answer = Answer::findOrFail($key)->first()->update([
+                    'title' => $newAnswerTitle
                 ]);
-                foreach ($questionData['answers'] as $answer){
-                    if ($answer){
-                        Answer::create([
-                            'question_id' => $question->id,
-                            'title' => $answer,
-                            'status' => 1
-                        ]);
-                    }
-                }
             }
+
+//            foreach ($request->newAnswers as $newAnswer){
+//                Answer::create([
+//                   'question_id' => $request->survey_id,
+//                   'title' => $newAnswer,
+//                   'status' => '1'
+//                ]);
+//            }
 
             DB::commit();
         }catch (Exception $ex) {
@@ -167,7 +157,7 @@ class SurveyController extends Controller
         }
 
         flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت ویرایش شد!', [], 'موفقیت آمیز');
-        return redirect()->route('surveys.index');
+        return redirect()->back();
     }
 
     public function delete_question(Question $question): RedirectResponse
@@ -248,7 +238,7 @@ class SurveyController extends Controller
         ]);
     }
 
-    public function add_phoneNumber(Request $request): void
+    public function add_phoneNumber(Request $request): RedirectResponse
     {
         $request->validate([
             'phone_number' => 'required|string|min:11|max:11|starts_with:09',
@@ -258,6 +248,8 @@ class SurveyController extends Controller
             'phone_number' => $request->phone_number,
             'survey_id' => $request->survey_id
         ]);
+        flash()->flash("success", 'ممنون از همکاری شما!', [], 'موفقیت آمیز');
+        return redirect('https://agkins.com');
     }
 
     public function search(): Factory|View|Application

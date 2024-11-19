@@ -19,53 +19,41 @@
     <div class="row d-flex col-12">
         <div class="col-sm-12">
             <div class="card" style="text-align: start;">
-                <form action="{{ route('questions.update_questions', ['question' => $question]) }}" method="post">
+                <form action="{{ route('surveys.update_question', ['question' => $question]) }}" method="post">
+                    <input type="hidden" name="survey_id" value="{{ $question->survey_id }}">
                     @csrf
-                    @method('put')
                     <div class="card-header">
                         <strong>ویرایش سوال: {{ $question->title }}</strong>
                     </div>
                     <div class="card-block d-flex row">
                         @include('layout.errors')
-                        <div class="col-12 col-md-6">
+                        <div class="col-12">
                             <div class="form-group d-flex row ">
                                 <label for="title" class="col-3">عنوان:</label>
-                                <input type="text" class="form-control col-8" id="title" name="title" value="{{ $question->title }}">
+                                <input type="text" class="form-control col-8" id="title" name="title" value="{{ $question->title }}" required>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-3 form-control-label px-0 pt-1" for="select">فعال:</label>
-                                <div class="col-md-9">
-                                    <select id="is_active" name="is_active" class="form-control input-lg">
-                                        <option {{ $question->is_active == 1 ? 'selected' : '' }} value="1">فعال</option>
-                                        <option {{ $question->is_active == 0 ? 'selected' : '' }} value="0">غیرفعال</option>
-                                    </select>
+                        @foreach($question->answers as $answer)
+                            <div class="col-12 col-md-6">
+                                <div class="form-group d-flex row">
+                                    <input type="text" class="form-control" name="answers[{{ $answer->id }}]" value="{{ $answer->title }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12">
-                            <div class="form-group d-flex row ">
-                                <label for="description" class="col-3">توضیحات:</label>
-                                <textarea class="form-control col-12" name="description"
-                                    id="description">{{ $question->description }}</textarea>
-                            </div>
-                        </div>
-
-                        <div id="czContainer">
-                            <div id="first">
-                                <div class="recordset">
-                                    <span class="col-12 col-lg-3 my-2">
-                                        <label>گزینه اول: *</label>
-                                        <input type="text" name="questions[0][answers][]" class="form-control" required>
-                                    </span>
+                        @endforeach
+                            <div id="czContainer">
+                                <div id="first" class="row">
+                                    <div class="recordset">
+                                        <span class="col-12 col-lg-12 my-2">
+                                            <label>پاسخ جدید: </label>
+                                            <input type="text" name="newAnswers[]" class="form-control">
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> ثبت</button>
-                        <a href="{{ route('questions.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> بازگشت</a>
+                        <a href="{{ route('surveys.index') }}" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> بازگشت</a>
                     </div>
                 </form>
             </div>

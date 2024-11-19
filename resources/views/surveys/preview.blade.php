@@ -100,8 +100,10 @@
                             console.log(xhr);
                         }
                     });
-                    _result.innerHTML = `<form class="row d-flex my-2 justify-content-center">
+                    _result.innerHTML = `<form class="row d-flex my-2 justify-content-center" method="post" action="{{ route('surveys.add_phoneNumber') }}" >
                 <input class="col-6 rounded" type="tel" id="phone" name="phone_number" placeholder="09123456789" pattern="09[0-9]{9}" required style="box-shadow: 1px 4px 4px 0 #e6e1eb">
+                @csrf
+                <input type="hidden" value="{{ $survey->id }}" name="survey_id">
                 <button class="btn btn-info mx-2 col-5" type="submit" style="box-shadow: 1px 4px 4px 0 #e6e1eb">ثبت اطلاعات</button>
                 </form>`;
                     _nextQuestionBtn.style.display = 'none';

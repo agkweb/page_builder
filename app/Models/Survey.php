@@ -18,13 +18,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Survey extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Sluggable;
     protected $guarded = [];
     protected $table = "surveys";
 
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
     protected static function boot(): void

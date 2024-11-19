@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->enum('type', ['option', 'text']);
             $table->tinyInteger('status');
+            $table->boolean('is_active')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -261,7 +261,7 @@ class PageController extends Controller
 
         $callback = function() use ($registrations,) {
             $columns = ['آیدی', 'نام و نام خانوادگی', 'شماره تلفن', 'ایمیل', 'مدرک', 'رشته', 'دانشگاه', 'استان', 'شهر', 'تاریخ ایجاد رکورد'];
-            $file = fopen('php://output', 'w');            // Adding BOM to ensure UTF-8 support in Excel
+            $file = fopen('php://output', 'w');
             fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
             fputcsv($file, $columns);
 

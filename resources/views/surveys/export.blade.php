@@ -15,31 +15,30 @@
     </li>
 </ol>
 <div class="wrapper container">
-    <div class="d-flex row">
-        <div class="col-6 mb-2" style="text-align: justify;">
+    <div class="d-flex row justify-content-center">
+        <div class="col-9 mb-2 mr-4" style="text-align: justify;">
             <a href="{{ route('surveys.index') }}" class="btn btn-primary mr-0">
                 پرسش نامه ها
             </a>
         </div>
-        <form method="POST" action="{{ route('surveys.exportInExcel', ['survey' => $survey]) }}">
+        <form class="col-9 justify-content-center" method="POST" action="{{ route('surveys.exportInExcel', ['survey' => $survey]) }}">
             @csrf
-            <div class="col-sm-12">
-                <div class="card text-end">
+            <div class="col-12">
+                <div class="card text-end d-flex">
                     <div class="card-header" style="text-align: right;">
                         <strong>خروجی پرسش نامه: {{ $survey->title }}</strong>
                     </div>
                     @include('layout.errors')
-                    <div class="card-block d-flex row" style="
-    text-align: right">
+                    <div class="card-block d-flex row" style="text-align: right">
                         <div class="col-12 col-md-6">
                             <div class="form-group row">
-                                <label for="title" class="col-3">از تاریخ: </label>
+                                <label for="title" class="col-3" style="align-self: self-end;">از تاریخ: </label>
                                 <input data-jdp type="text" class="form-control col-8" name="start" id="start" value="{{ old('start') }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group row">
-                                <label for="title" class="col-3">تا تاریخ: </label>
+                                <label for="title" class="col-3" style="align-self: self-end;">تا تاریخ: </label>
                                 <input data-jdp type="text" class="form-control col-8" name="end" id="end" value="{{ old('end') }}">
                             </div>
                         </div>

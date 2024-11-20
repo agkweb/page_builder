@@ -108,7 +108,31 @@ class SurveyController extends Controller
         return view('surveys/preview', compact('survey'));
     }
 
-    /**
+    public function validateBrowser(Request $request)
+    {
+        $browserId = $request->input('browserId');
+
+        // Perform your validation logic here
+        // For example, you can check if the browser ID exists in a database of allowed IDs
+        $allowed = $this->isBrowserIdAllowed($browserId);
+
+        return response()->json(['allowed' => $allowed]);
+    }
+
+    private function isBrowserIdAllowed($browserId)
+    {
+        // Example validation logic (replace with your actual logic)
+        $allowedBrowserIds = [
+            'browser_abc123', // Replace with actual allowed browser IDs
+            'browser_def456',
+            // Add more allowed browser IDs here
+        ];
+
+        return in_array($browserId, $allowedBrowserIds);
+    }
+
+
+/**
      * Show the form for editing the specified resource.
      */
     public function edit(Survey $survey): View|Factory|Application

@@ -10,6 +10,7 @@ Route::get('/', function () {
     return view('layout.main');
 });
 Route::get('/surveys/{survey}/questions', [SurveyController::class, 'getQuestions']);
+Route::post('/validate-browser', [SurveyController::class, 'validateBrowser']);
 
 // PAGES
 Route::get('pagesSearch', [PageController::class , 'search'])->name('pages.search');

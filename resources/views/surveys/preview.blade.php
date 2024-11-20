@@ -12,7 +12,80 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('assets/panel/js/libs/jquery.min.js') }}"></script>
     <title>{{ $survey->title }}</title>
-</head>
+    <script>
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let surveyCompleted = getCookie('surveyCompleted');
+            if (surveyCompleted) {
+                alert('شما قبلا داخل این نظرسنجی شرکت کردید!');
+                window.location = "{{ url('https://agkins.com') }}";
+                document.querySelector('.quiz-container').style.display = 'none';
+            } else {
+                document.querySelector('.quiz-container').style.display = 'block';
+            }
+        });
+
+        function completeSurvey() {
+            // Set survey completed cookie
+            setCookie('surveyCompleted', 'true', 30); // Store for 30 days
+
+            let browserId = localStorage.getItem('browserId');
+            if (!browserId) {
+                browserId = `browser_${Math.random().toString(36).substr(2, 9)}`;
+                localStorage.setItem('browserId', browserId);
+            }
+
+            // Send final survey data to the server
+            const activeOption = document.querySelector('.quiz-options .selected');
+            fetch('/submit-survey', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    survey_data: {
+                        survey_id: {{ $survey->id }},
+                        question_id: quizzes[currentQuiz].id,
+                        answer_id: activeOption.id,
+                        browser_id: browserId
+                    }
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Survey completed! Thank you.');
+                        document.querySelector('.quiz-container').style.display = 'none';
+                    } else {
+                        alert(data.message || 'An error occurred.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 
 <body class="flex flex-column">
     <div class="quiz-head my-3">
@@ -82,6 +155,7 @@
                     updateCounter();
                 } else {
                     const activeOption = _options.querySelector('.selected');
+                    completeSurvey();
                     $.ajax({
                         url: '{{ route('surveys.save') }}',
                         type: 'post',
@@ -100,7 +174,7 @@
                             console.log(xhr);
                         }
                     });
-                    _result.innerHTML = `<form class="row d-flex my-2 justify-content-center" method="post" action="{{ route('surveys.add_phoneNumber') }}" >
+                    _result.innerHTML = `<form class="row d-flex my-2 justify-content-center" id="" method="post" action="{{ route('surveys.add_phoneNumber') }}" >
                 <input class="col-6 rounded" type="tel" id="phone" name="phone_number" placeholder="09123456789" pattern="09[0-9]{9}" required style="box-shadow: 1px 4px 4px 0 #e6e1eb">
                 @csrf
                 <input type="hidden" value="{{ $survey->id }}" name="survey_id">
@@ -133,6 +207,35 @@
         function updateCounter() {
             _currentQuestion.textContent = currentQuiz + 1;
         }
+
+        // Check if a browser ID already exists in localStorage
+        let browserId = localStorage.getItem('browserId');
+        if (!browserId) {
+            // Generate a unique browser ID
+            browserId = `browser_${Math.random().toString(36).substr(2, 9)}`;
+            localStorage.setItem('browserId', browserId);
+        }
+        fetch('/validate-browser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ browserId: browserId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.allowed) {
+                    // Allow the user to access the survey
+                    // document.getElementById('surveyForm').style.display = 'block';
+                } else {
+                    // Display an error message or redirect the user
+                    // alert('Access denied');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     </script>
     <script src="{{ asset('assets/panel/js/libs/bootstrap-4.6.2-dist/bootstrap.min.js') }}"></script>
 </body>

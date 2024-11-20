@@ -230,7 +230,7 @@ class PageController extends Controller
         return response()->json(['message' => 'No file uploaded'], 400);
     }
 
-    public function export(Page $page)
+    public function export(Page $page): Application|Factory|View|RedirectResponse
     {
         if ($page->status != 2){
             flash()->flash("warning", 'صفحه مورد نظر فرم ندارد!', [], 'صفحه اشتباه!');
@@ -265,21 +265,23 @@ class PageController extends Controller
             fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
             fputcsv($file, $columns);
 
-            foreach ($registrations as $registration) {
-                $row = [
-                    $registration->id,
-                    $registration->fullname,
-                    $registration->phone_number,
-                    $registration->email,
-                    $registration->license,
-                    $registration->major,
-                    $registration->university,
-                    $registration->province ? $registration->province->name : '',
-                    $registration->city ? $registration->city->name : '',
-                    verta($registration->created_at),
-                ];
+            if ($registrations){
+                foreach ($registrations as $registration) {
+                    $row = [
+                        $registration->id,
+                        $registration->fullname,
+                        $registration->phone_number,
+                        $registration->email,
+                        $registration->license,
+                        $registration->major,
+                        $registration->university,
+                        $registration->province ? $registration->province->name : '',
+                        $registration->city ? $registration->city->name : '',
+                        verta($registration->created_at),
+                    ];
 
-                fputcsv($file, $row);
+                    fputcsv($file, $row);
+                }
             }
 
             fclose($file);

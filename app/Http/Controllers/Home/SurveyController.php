@@ -326,14 +326,16 @@ class SurveyController extends Controller
             fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
             fputcsv($file, $columns);
 
-            foreach ($responses as $response) {
-                $row = [
-                    $response->id,
-                    $response->answer->title,
-                    verta($response->created_at),
-                ];
+            if ($responses){
+                foreach ($responses as $response) {
+                    $row = [
+                        $response->id,
+                        $response->answer->title,
+                        verta($response->created_at),
+                    ];
 
-                fputcsv($file, $row);
+                    fputcsv($file, $row);
+                }
             }
 
             fclose($file);

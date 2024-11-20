@@ -534,10 +534,12 @@ $(document).ready(function () {
             </div>
             <div class="form-step-2">
                 <h2>Step 2: Contact Information</h2>
-                <form>
+                <form id="form-step-2" action="http://localhost:8000/registrations/storeData" method="get">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-                    <input type="tel" id="phone_number" name="phone_number" placeholder="09123456789" required>
+                    <input type="text" id="field" name="field" required>
+                    <input type="hidden" id="form_2_phone_number" name="form_2_phone_number" required>
+                    <input type="hidden" id="form_2_page_id" name="form_2_page_id" required>
                     <button type="submit">Submit</button>
                 </form>
             </div>

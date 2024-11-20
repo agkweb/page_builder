@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,42 +34,27 @@ class RegistrationController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function storePhoneNumber(Request $request): RedirectResponse
+    public function storePhoneNumber(Request $request)
     {
-        $request->validate([
-            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
-            'page_id' => 'required'
-        ]);
+        $form_step_one_data = $request->input('form_step_one_data');
 
-        try {
-            DB::beginTransaction();
+        $registration = Registration::where('phone_number', $form_step_one_data[1]['phone_number'])->where('page_id', $form_step_one_data[0]['page_id'])->first();
 
-            $registration = Registration::where('phone_number', $request->phone_number)->where('page_id', $request->page_id)->first();
-
-            if (!$registration){
-                Registration::create([
-                    'page_id' => $request->page_id,
-                    'phone_number' => $request->phone_number
-                ]);
-            }else{
-                flash()->flash("success", 'شما قبلا ثبت نام کردید.', [], 'ناموفق');
-            }
-
-            DB::commit();
-        }catch (Exception $ex) {
-            DB::rollBack();
-            flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
+        if (!$registration){
+            Registration::create([
+                'page_id' => $form_step_one_data[0]['page_id'],
+                'phone_number' => $form_step_one_data[1]['phone_number'],
+            ]);
+            return 'success';
+        }else{
+            return 'error';
         }
-
-        flash()->flash("success", 'اطلاعات با موفقیت ذخیره شد.', [], 'موفقیت آمیز');
-        return redirect()->back();
     }
-    public function store(Request $request): RedirectResponse
+    public function storeData(Request $request): RedirectResponse
     {
         $request->validate([
-            'page_id' => 'required',
-            'fullname' => 'nullable|string',
-            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
+            'form_2_page_id' => 'required',
+            'form_2_phone_number' => 'required|string|min:11|max:11|starts_with:09',
             'email' => 'nullable|email',
             'degree' => 'nullable|string',
             'field' => 'nullable|string',
@@ -85,13 +71,21 @@ class RegistrationController extends Controller
         try {
             DB::beginTransaction();
 
-            $registration = Registration::where('phone_number', $request->phone_number)->where('page_id', $request->page_id)->first();
+            $registration = Registration::where('phone_number', $request->form_2_phone_number)->where('page_id', $request->form_2_page_id)->first();
 
-            $existedData = array_filter($request->all(), function ($value){
-               return !is_null($value);
-            });
+//            $existedData = array_filter($request->all(), function ($value){
+//               return !is_null($value);
+//            });
 
-            $registration->update($existedData);
+            $registration->update([
+                'email' => $request->email ? $request->email : null,
+                'fullname' => $request->fullname? $request->fullname : null,
+                'degree' => $request->degree ? $request->degree : null,
+                'field' => $request->field ? $request->field : null,
+                'university_name' => $request->university_name ? $request->university_name : null,
+                'province_id' => $request->province_id ? $request->email : null,
+                'city_id' => $request->city_id ? $request->city_id : null
+            ]);
 
             DB::commit();
         }catch (Exception $ex) {

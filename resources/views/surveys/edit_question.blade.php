@@ -38,7 +38,7 @@
                             <div class="col-12">
                                 <div class="form-group d-flex row col-12 justify-content-center">
                                     <input type="text" class="form-control col-10" name="answers[{{ $answer->id }}]" value="{{ $answer->title }}" required>
-                                    <button class="btn btn-danger col-1 mx-1">حذف</button>
+                                    <a href="{{ route('surveys.delete_answer', ['answer' => $answer]) }}" class="btn btn-danger col-1 mx-1">حذف</a>
                                 </div>
                             </div>
                         @endforeach

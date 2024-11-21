@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Home\CategoryController;
 use App\Http\Controllers\Home\PageController;
+use App\Http\Controllers\Home\QuizController;
 use App\Http\Controllers\Home\RegistrationController;
 use App\Http\Controllers\Home\SurveyController;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,20 @@ Route::prefix('surveys/')->name('surveys.')->group(function (){
 });
 
 Route::post('/submit-survey', [SurveyController::class , 'save'])->name('surveys.save');
+
+// QUIZZES
+Route::get('quizSearch', [QuizController::class , 'search'])->name('quizzes.search');
+Route::resource('quizzes', QuizController::class);
+Route::get('quizSearchFromTrash', [QuizController::class , 'searchFromTrash'])->name('quizzes.searchFromTrash');
+Route::prefix('quizzes/')->name('quizzes.')->group(function (){
+    Route::get('edit_question/{quiz_question}', [QuizController::class , 'edit_question'])->name('edit_question');
+    Route::put('update_question/{quiz_question}', [QuizController::class , 'update_question'])->name('update_question');
+    Route::get('delete_question/{quiz_question}', [QuizController::class , 'delete_question'])->name('delete_question');
+    Route::get('delete_answer/{quiz_option}', [QuizController::class , 'delete_option'])->name('delete_option');
+    Route::get('trash', [QuizController::class , 'trash'])->name('trash');
+    Route::post('{quiz}/restore', [QuizController::class , 'restore'])->name('restore');
+    Route::get('editQuestions/{quiz}', [QuizController::class , 'editQuestions'])->name('editQuestions');
+    Route::get('preview/{quiz:slug}', [QuizController::class , 'preview'])->name('preview');
+    Route::get('export/{quiz}', [QuizController::class , 'export'])->name('export');
+    Route::post('export/{quiz}', [QuizController::class , 'exportInExcel'])->name('exportInExcel');
+});

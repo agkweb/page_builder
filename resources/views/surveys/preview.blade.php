@@ -37,9 +37,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             let surveyCompleted = getCookie('surveyCompleted');
             if (surveyCompleted) {
-                alert('شما قبلا داخل این نظرسنجی شرکت کردید!');
-                window.location = "{{ url('https://agkins.com') }}";
+                {{--window.location = "{{ url('https://agkins.com') }}";--}}
                 document.querySelector('.quiz-container').style.display = 'none';
+                alert('شما قبلا داخل این نظرسنجی شرکت کردید!');
             } else {
                 document.querySelector('.quiz-container').style.display = 'block';
             }

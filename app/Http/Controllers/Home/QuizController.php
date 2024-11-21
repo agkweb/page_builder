@@ -4,14 +4,10 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
-use App\Models\Category;
-use App\Models\Page;
 use App\Models\Question;
-use App\Models\Registration;
+use App\Models\Quiz;
+use App\Models\QuizQuestion;
 use App\Models\Response;
-use App\Models\Survey;
-use App\Models\SurveyUser;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,35 +16,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class SurveyController extends Controller
+class QuizController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View|Factory|Application
     {
-        $surveys = Survey::latest()->paginate(10);
-        return view('surveys/index', compact('surveys'));
+        $quizzes = Quiz::latest()->paginate(10);
+        return view('quizzes/index', compact('quizzes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): Factory|View|Application
     {
-        return view('surveys.create');
+        return view('quizzes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): RedirectResponse
     {
-        $request->validateWithBag('createSurvey', [
+        $request->validateWithBag('createQuiz', [
             'title' => 'required',
             'description' => 'required',
             'is_active' => 'required',
@@ -57,7 +41,7 @@ class SurveyController extends Controller
         try {
             DB::beginTransaction();
 
-            $survey = Survey::create([
+            $quiz = Quiz::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'status' => '1',
@@ -66,11 +50,9 @@ class SurveyController extends Controller
 
             $step = 0;
             foreach ($request->questions as $questionData){
-                $step++;
-                $question = Question::create([
-                    'survey_id' => $survey->id,
-                    'step' => $step,
-                    'title' => $questionData['question'],
+                $question = QuizQuestion::create([
+                    'quiz_id' => $quiz->id,
+                    'text' => $questionData['text'],
                     'type' => 'option',
                     'status' => '1'
                 ]);
@@ -91,21 +73,21 @@ class SurveyController extends Controller
         }
 
         flash()->flash("success", 'با موفقیت به پرسش نامه ها اضافه شد.', [], 'موفقیت آمیز');
-        return redirect()->route('surveys.index');
+        return redirect()->route('quizzes.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Survey $survey): View|Factory|Application
+    public function show(Quiz $quiz): View|Factory|Application
     {
-        return view('surveys/show', compact('survey'));
+        return view('quizzes/show', compact('quiz'));
     }
 
-    public function preview(Survey $survey): View|Factory|Application
+    public function preview(Quiz $quiz): View|Factory|Application
     {
-        $survey = Survey::with('questions.answers')->findOrFail($survey->id);
-        return view('surveys/preview', compact('survey'));
+        $quiz = Quiz::with('questions.answers')->findOrFail($quiz->id);
+        return view('quizzes/preview', compact('quiz'));
     }
 
     public function validateBrowser(Request $request): JsonResponse
@@ -135,14 +117,14 @@ class SurveyController extends Controller
 /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Survey $survey): View|Factory|Application
+    public function edit(Quiz $quiz): View|Factory|Application
     {
-        return view('surveys.edit', compact('survey'));
+        return view('quizzes.edit', compact('quiz'));
     }
 
     public function edit_question(Question $question): View|Factory|Application
     {
-        return view('surveys.edit_question', compact('question'));
+        return view('quizzes.edit_question', compact('question'));
     }
 
     public function update_question(Request $request, Question $question): RedirectResponse
@@ -203,7 +185,7 @@ class SurveyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Survey $survey): RedirectResponse
+    public function update(Request $request, Quiz $quiz): RedirectResponse
     {
         $request->validate([
             'title' => 'required',
@@ -214,7 +196,7 @@ class SurveyController extends Controller
         try {
             DB::beginTransaction();
 
-            $survey->update([
+            $quiz->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'is_active' => $request->is_active
@@ -225,7 +207,7 @@ class SurveyController extends Controller
                 foreach ($request->questions as $questionData){
                     $step++;
                     $question = Question::create([
-                        'survey_id' => $survey->id,
+                        'quiz_id' => $quiz->id,
                         'step' => $step,
                         'title' => $questionData['question'],
                         'type' => 'option',
@@ -254,87 +236,73 @@ class SurveyController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Survey $survey): RedirectResponse
+    public function destroy(Quiz $quiz): RedirectResponse
     {
-        $survey->delete();
+        $quiz->delete();
         flash()->flash("success", 'پرسشنامه مورد نظر با موفقیت حذف شد!', [], 'موفقیت آمیز');
         return redirect()->back();
     }
 
     public function save(Request $request): void
     {
-        $surveyData = $request->input('survey_data');
+        $quizData = $request->input('quiz_data');
         Response::create([
-            'survey_id' => $surveyData[0]['survey_id'],
-            'question_id' => $surveyData[1]['question_id'],
-            'answer_id' => $surveyData[2]['answer_id'],
+            'quiz_id' => $quizData[0]['quiz_id'],
+            'question_id' => $quizData[1]['question_id'],
+            'answer_id' => $quizData[2]['answer_id'],
         ]);
-    }
-
-    public function add_phoneNumber(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'phone_number' => 'required|string|min:11|max:11|starts_with:09',
-            'survey_id' => 'required',
-        ]);
-        SurveyUser::create([
-            'phone_number' => $request->phone_number,
-            'survey_id' => $request->survey_id
-        ]);
-        flash()->flash("success", 'ممنون از همکاری شما!', [], 'موفقیت آمیز');
-        return redirect('https://agkins.com');
     }
 
     public function search(): Factory|View|Application
     {
         $keyword = request()->keyword;
         if (request()->has('keyword') && trim($keyword) != ''){
-            $surveys = Survey::where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
+            $quizzes = Quiz::where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
         }else{
-            $surveys = Survey::latest()->paginate(10);
+            $quizzes = Quiz::latest()->paginate(10);
         }
-        return view('surveys/index' , compact('surveys'));
+        return view('quizzes/index' , compact('quizzes'));
     }
 
     public function searchFromTrash(): View|Factory|Application
     {
         $keyword = request()->keyword;
         if (request()->has('keyword') && trim($keyword) != ''){
-            $surveys = Survey::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
+            $quizzes = Quiz::onlyTrashed()->where('title', 'LIKE', '%'.trim($keyword).'%')->latest()->paginate(10);
         }else{
-            $surveys = Survey::onlyTrashed()->latest()->paginate(10);
+            $quizzes = Quiz::onlyTrashed()->latest()->paginate(10);
         }
-        return view('surveys/trash' , compact('surveys'));
+        return view('quizzes/trash' , compact('quizzes'));
     }
 
     public function trash(): View|Factory|Application
     {
-        $surveys = Survey::onlyTrashed()->orderBy('status', 'desc')->latest()->paginate(10);
-        return view('surveys/trash', compact('surveys'));
+        $quizzes = Quiz::onlyTrashed()->orderBy('status', 'desc')->latest()->paginate(10);
+        return view('quizzes/trash', compact('quizzes'));
     }
 
     public function restore(Request $request): RedirectResponse
     {
-        Survey::onlyTrashed()->find($request->survey)->restore();
+        Quiz::onlyTrashed()->find($request->quiz)->restore();
         flash()->flash("success", 'پرسش نامه مورد نظر با موفقیت بازگردانی شد!', [], 'موفقیت آمیز');
         return redirect()->back();
     }
 
-    public function export(Survey $survey): Application|Factory|View|RedirectResponse
+    public function export(Quiz $quiz): Application|Factory|View|RedirectResponse
     {
-        return view('surveys.export', compact('survey'));
+        return view('quizzes.export', compact('quiz'));
     }
 
-    public function exportInExcel(Request $request, Survey $survey): StreamedResponse
+    public function exportInExcel(Request $request, Quiz $quiz): StreamedResponse
     {
         $request->validate([
             'start' => 'required',
             'end' => 'required',
         ]);
 
-        $fileName = 'surveys.csv';
+        $fileName = 'quizzes.csv';
 
-        $responses = Response::where('survey_id', $survey->id)->whereBetween('created_at',[convertToGregorianDate($request->start), convertToGregorianDate($request->end)])->get();
+        $responses = Response::where('quiz_id', $quiz->id)->whereBetween('created_at',[convertToGregorianDate($request->start), convertToGregorianDate($request->end)])->get();
 
         $headers = [
             "Content-type"        => "text/csv",

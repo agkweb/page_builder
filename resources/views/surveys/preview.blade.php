@@ -35,7 +35,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            let surveyCompleted = getCookie('surveyCompleted');
+            let surveyCompleted = getCookie('surveyCompleted-{{ $survey->id }}');
             if (surveyCompleted) {
                 {{--window.location = "{{ url('https://agkins.com') }}";--}}
                 document.querySelector('.quiz-container').style.display = 'none';
@@ -47,7 +47,7 @@
 
         function completeSurvey() {
             // Set survey completed cookie
-            setCookie('surveyCompleted', 'true', 30); // Store for 30 days
+            setCookie('surveyCompleted-{{ $survey->id }}', 'true', 30); // Store for 30 days
 
             let browserId = localStorage.getItem('browserId');
             if (!browserId) {

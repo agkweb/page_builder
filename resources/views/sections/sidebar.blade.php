@@ -35,12 +35,12 @@
                 <a class="nav-link {{ $active == 'indexSurveys' ? 'active' : '' }}" href="{{ route('surveys.index') }}"><i class="icon-list"></i> لیست پرسش نامه ها</a>
             </li>
 
-            <li class="nav-title">
-                مدیریت آزمون ها
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ $active == 'indexQuizzes' ? 'active' : '' }}" href="{{ route('quizzes.index') }}"><i class="icon-list"></i> لیست آزمون ها</a>
-            </li>
+{{--            <li class="nav-title">--}}
+{{--                مدیریت آزمون ها--}}
+{{--            </li>--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link {{ $active == 'indexQuizzes' ? 'active' : '' }}" href="{{ route('quizzes.index') }}"><i class="icon-list"></i> لیست آزمون ها</a>--}}
+{{--            </li>--}}
         </ul>
     </nav>
 </div>

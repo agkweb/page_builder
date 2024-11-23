@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->foreign('question_id')->references('id')->on('quiz_questions')->onDelete('cascade');
-            $table->text('answer_text');
+            $table->text('text');
             $table->boolean('is_correct')->default(false);
             $table->tinyInteger('status');
             $table->boolean('is_active')->default(1);

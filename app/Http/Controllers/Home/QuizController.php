@@ -48,23 +48,22 @@ class QuizController extends Controller
                 'is_active' => $request->is_active
             ]);
 
-            $step = 0;
             foreach ($request->questions as $questionData){
-                $question = QuizQuestion::create([
+                $quizQuestion = QuizQuestion::create([
                     'quiz_id' => $quiz->id,
                     'text' => $questionData['text'],
-                    'type' => 'option',
                     'status' => '1'
                 ]);
-                foreach ($questionData['answers'] as $answer){
-                    if ($answer){
-                        Answer::create([
-                            'question_id' => $question->id,
-                            'title' => $answer,
-                            'status' => 1
-                        ]);
-                    }
-                }
+//                foreach ($questionData['options'] as $option){
+//                    if ($option){
+//                        QuizOption::create([
+//                            'question_id' => $question->id,
+//                            'text' => $option,
+//                            'is_correct' => $option
+//                            'status' => 1
+//                        ]);
+//                    }
+//                }
             }
             DB::commit();
         }catch (Exception $ex) {
@@ -72,7 +71,7 @@ class QuizController extends Controller
             flash()->flash("error", $ex->getMessage(), [], 'مشکلی پیش آمد');
         }
 
-        flash()->flash("success", 'با موفقیت به پرسش نامه ها اضافه شد.', [], 'موفقیت آمیز');
+        flash()->flash("success", 'با موفقیت به آزمون ها اضافه شد.', [], 'موفقیت آمیز');
         return redirect()->route('quizzes.index');
     }
 

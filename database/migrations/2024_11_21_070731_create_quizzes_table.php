@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('duration')->default(60);
             $table->tinyInteger('status');
             $table->boolean('is_active')->default(1);
             $table->softDeletes();

@@ -79,7 +79,7 @@ class RegistrationController extends Controller
 
             $registration->update([
                 'email' => $request->email ? $request->email : null,
-                'fullname' => $request->fullname? $request->fullname : null,
+                'fullname' => $request->fullname ? $request->fullname : null,
                 'degree' => $request->degree ? $request->degree : null,
                 'field' => $request->field ? $request->field : null,
                 'university_name' => $request->university_name ? $request->university_name : null,

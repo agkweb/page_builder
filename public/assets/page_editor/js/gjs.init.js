@@ -525,19 +525,28 @@ $(document).ready(function () {
         content: `
             <div class="form-step-1" style="background: #0b2e13">
                 <h2>Step 1: Personal Information</h2>
-                <form class="form-step-1">
-                    <label for="name">Name:</label>
+                    <label for="name">:شماره تلفن</label>
                     <input type="hidden" id="page_id" name="page_id">
                     <input type="tel" id="phone_number" name="phone_number" placeholder="09123456789" required>
                     <button type="button" id="nextForm">Next</button>
-                </form>
             </div>
             <div class="form-step-2">
                 <h2>Step 2: Contact Information</h2>
                 <form id="form-step-2" action="http://localhost:8000/registrations/storeData" method="get">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-                    <input type="text" id="field" name="field" required>
+                    <label for="email">fullname:</label>
+                    <input type="text" id="fullname" name="fullname">
+                    <label for="email">degree:</label>
+                    <input type="text" id="degree" name="degree">
+                    <label for="email">field:</label>
+                    <input type="text" id="field" name="field">
+                    <label for="email">university_name:</label>
+                    <input type="text" id="university_name" name="university_name">
+                    <label for="email">province_id:</label>
+                    <input type="text" id="province_id" name="province_id">
+                    <label for="email">city_id:</label>
+                    <input type="text" id="city_id" name="city_id">
                     <input type="hidden" id="form_2_phone_number" name="form_2_phone_number" required>
                     <input type="hidden" id="form_2_page_id" name="form_2_page_id" required>
                     <button type="submit">Submit</button>

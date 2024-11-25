@@ -51,7 +51,6 @@ class SurveyController extends Controller
         $request->validateWithBag('createSurvey', [
             'title' => 'required',
             'description' => 'required',
-            'is_active' => 'required',
         ]);
 
         try {
@@ -60,8 +59,7 @@ class SurveyController extends Controller
             $survey = Survey::create([
                 'title' => $request->title,
                 'description' => $request->description,
-                'status' => '1',
-                'is_active' => $request->is_active
+                'status' => '1'
             ]);
 
             $step = 0;
@@ -102,10 +100,15 @@ class SurveyController extends Controller
         return view('surveys/show', compact('survey'));
     }
 
-    public function preview(Survey $survey): View|Factory|Application
+    public function preview(Survey $survey): Application|Factory|View|RedirectResponse
     {
         $survey = Survey::with('questions.answers')->findOrFail($survey->id);
-        return view('surveys/preview', compact('survey'));
+        if ($survey->is_active == 1){
+            return view('surveys/preview', compact('survey'));
+        }else{
+            flash()->flash("warning", 'پرسشنامه مورد نظر فعال نیست!', [], 'ناموفق');
+            return redirect()->back();
+        }
     }
 
     public function validateBrowser(Request $request): JsonResponse
@@ -207,8 +210,7 @@ class SurveyController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
-            'is_active' => 'required',
+            'description' => 'required'
         ]);
 
         try {
@@ -216,8 +218,7 @@ class SurveyController extends Controller
 
             $survey->update([
                 'title' => $request->title,
-                'description' => $request->description,
-                'is_active' => $request->is_active
+                'description' => $request->description
             ]);
 
             if ($request->questions){
@@ -370,15 +371,21 @@ class SurveyController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    public function chart(Question $question)
+    public function chart(Survey $survey)
     {
-        $data = $question->answers->map(function ($answer) use ($question) {
-            $responsesCount = $answer->responses()->where('question_id', $question->id)->get()->count();
-            return [
-                'answer' => $answer->title,
-                'responses' => $responsesCount
+        $data = [];
+        foreach ($survey->questions as $question){
+            $questionData = [
+                'question' => $question->title,
+                'answers' => $question->answers->map(function ($answer) use ($question) {
+                    return [
+                        'answer' => $answer->title,
+                        'responses' => $answer->responses()->where('question_id', $question->id)->count()
+                    ];
+                })
             ];
-        });
+            $data[] = $questionData;
+        }
         return view('surveys.chart', compact('question','data'));
     }
 }

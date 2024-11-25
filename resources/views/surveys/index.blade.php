@@ -67,6 +67,9 @@
                                     <a class="dropdown-item" href="{{ route('surveys.export', ['survey' => $survey]) }}">
                                         خروجی اکسل
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('surveys.chart', ['survey' => $survey]) }}">
+                                        نمودار پاسخ ها
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('surveys.show', ['survey' => $survey]) }}">
                                         نمایش
                                     </a>

@@ -54,8 +54,7 @@ class PageController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'html' => 'required|string',
-            'css' => 'required|string',
-            'is_active' => 'required'
+            'css' => 'required|string'
         ]);
 
         try {
@@ -69,8 +68,7 @@ class PageController extends Controller
                 'user_id' => '1',
                 'html' => $request->html,
                 'css' => $request->css,
-                'status' => $hasForm ? 2 : 1,
-                'is_active' => $request->is_active,
+                'status' => $hasForm ? 2 : 1
             ]);
 
             DB::commit();
@@ -86,10 +84,15 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Page $page): View|Factory|Application
+    public function show(Page $page): Application|Factory|View|RedirectResponse
     {
-        $page->increment('visits');
-        return view('pages/show', compact('page'));
+        if ($page->is_active == 1){
+            $page->increment('visits');
+            return view('pages/show', compact('page'));
+        }else{
+            flash()->flash("warning", 'صفحه مورد نظر فعال نیست!', [], 'ناموفق');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -99,8 +102,7 @@ class PageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'category_id' => 'required',
-            'is_active' => 'required|string',
+            'category_id' => 'required'
         ]);
 
         if($validator->fails()){
@@ -109,8 +111,7 @@ class PageController extends Controller
             $page = Page::findOrFail($request->page_id);
             $page->update([
                'title' => $request->title,
-               'category_id' => $request->category_id,
-               'is_active' => $request->is_active,
+               'category_id' => $request->category_id
             ]);
             return view('pages.update', compact('page'));
         }

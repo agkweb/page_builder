@@ -91,6 +91,9 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                             <a class="dropdown-item" href="{{ route('surveys.edit_question', ['question' => $question]) }}">ویرایش</a>
+                                            <a class="dropdown-item" href="{{ route('surveys.chart', ['question' => $question]) }}">
+                                                نمایش نمودار
+                                            </a>
                                             <a href="{{ route('surveys.delete_question', ['question' => $question]) }}" class="dropdown-item" >حذف</a>
                                         </div>
                                     </div>

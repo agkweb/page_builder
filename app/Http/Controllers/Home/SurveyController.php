@@ -367,4 +367,16 @@ class SurveyController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
+    public function chart(Question $question)
+    {
+        $data = $question->answers->map(function ($answer) use ($question) {
+            $responsesCount = $answer->responses()->where('question_id', $question->id)->get()->count();
+            return [
+                'answer' => $answer->title,
+                'responses' => $responsesCount
+            ];
+        });
+        return view('surveys.chart', compact('question','data'));
+    }
 }

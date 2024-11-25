@@ -46,6 +46,7 @@ Route::get('surveySearch', [SurveyController::class , 'search'])->name('surveys.
 Route::resource('surveys', SurveyController::class);
 Route::get('surveysSearchFromTrash', [SurveyController::class , 'searchFromTrash'])->name('surveys.searchFromTrash');
 Route::prefix('surveys/')->name('surveys.')->group(function (){
+    Route::get('chart/{question}', [SurveyController::class , 'chart'])->name('chart');
     Route::get('edit_question/{question}', [SurveyController::class , 'edit_question'])->name('edit_question');
     Route::put('update_question/{question}', [SurveyController::class , 'update_question'])->name('update_question');
     Route::get('delete_question/{question}', [SurveyController::class , 'delete_question'])->name('delete_question');

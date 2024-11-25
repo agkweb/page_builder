@@ -17,4 +17,5 @@
 <script src="{{ asset('assets/panel/js/views/main.js') }}"></script>
 <script src="//localhost:35729/livereload.js"></script>
 <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ asset('assets/panel/js/libs/jquery.czMore-latest.js') }}"></script>

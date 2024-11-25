@@ -24,6 +24,9 @@
                 <i class="fa fa-trash"></i>
                 سطل آشغال
             </a>
+            <a class="btn btn-secondary " style="max-width: fit-content" href="{{ route('pages.chart') }}">
+                نمودار ثبت نامی ها
+            </a>
         </div>
         <div class="col-6 my-0" style="justify-items: end;">
             <form class="ml-0 col-12 d-felx row justify-content-around" action="{{ route('pages.search') }}"
@@ -52,8 +55,6 @@
                         <button type="button" class="close mr-auto ml-0" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-
-
                     </div>
                     <div class="modal-body text-right">
                         <form action="{{ route('pages.create') }}" method="GET">

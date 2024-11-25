@@ -18,6 +18,7 @@ Route::get('pagesSearch', [PageController::class , 'search'])->name('pages.searc
 Route::resource('pages', PageController::class);
 Route::get('pagesSearchFromTrash', [PageController::class , 'searchFromTrash'])->name('pages.searchFromTrash');
 Route::prefix('pages/')->name('pages.')->group(function (){
+    Route::get('chart/registrations', [PageController::class , 'chart'])->name('chart');
     Route::post('upload/images', [PageController::class, 'upload']);
     Route::get('trash', [PageController::class , 'trash'])->name('trash');
     Route::get('export/{page}', [PageController::class , 'export'])->name('export');

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Registration;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -288,5 +287,11 @@ class PageController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function chart(): View|Factory|Application
+    {
+        $forms = Page::where('status', '=', '2')->withCount('registrations')->orderBy('registrations_count')->get();
+        return view('pages.chart', compact('forms'));
     }
 }

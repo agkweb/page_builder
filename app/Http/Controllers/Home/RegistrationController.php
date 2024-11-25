@@ -34,7 +34,7 @@ class RegistrationController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function storePhoneNumber(Request $request)
+    public function storePhoneNumber(Request $request): string
     {
         $form_step_one_data = $request->input('form_step_one_data');
 
@@ -46,6 +46,7 @@ class RegistrationController extends Controller
                 'phone_number' => $form_step_one_data[1]['phone_number'],
             ]);
             return 'success';
+            // send an SMS
         }else{
             return 'error';
         }

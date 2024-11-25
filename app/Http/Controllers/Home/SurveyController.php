@@ -345,7 +345,7 @@ class SurveyController extends Controller
         ];
 
         $callback = function() use ($responses) {
-            $columns = ['آیدی', 'پاسخ', 'تاریخ ایجاد رکورد'];
+            $columns = ['آیدی', 'پرسش نامه', 'سوال', 'پاسخ', 'تاریخ ایجاد رکورد'];
             $file = fopen('php://output', 'w');
             fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
             fputcsv($file, $columns);
@@ -354,7 +354,9 @@ class SurveyController extends Controller
                 foreach ($responses as $response) {
                     $row = [
                         $response->id,
-                        $response->answer->title,
+                        $response->survey ? $response->survey->title : '',
+                        $response->question ? $response->question->title : '',
+                        $response->answer ? $response->answer->title : '',
                         verta($response->created_at),
                     ];
 

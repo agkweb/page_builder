@@ -26,4 +26,9 @@ class Response extends Model
     {
         return $this->belongsTo(Answer::class);
     }
+
+    public function question(): BelongsTo
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

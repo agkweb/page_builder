@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Registration;
+use App\Models\User;
+use App\Notifications\SendWelcomeSMS;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +15,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -24,6 +27,9 @@ class PageController extends Controller
      */
     public function index(): View|Factory|Application
     {
+        $user = User::all()->first();
+        $user->notify(new SendWelcomeSMS());
+//        Notification::send(User::all()->first(), new SendWelcomeSMS('aaaaa'));
         $pages = Page::with('category')->latest()->paginate(10);
         $categories = Category::get();
         return view('pages/index', compact('pages', 'categories'));

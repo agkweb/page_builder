@@ -40,7 +40,8 @@ class PageController extends Controller
         $request->validateWithBag('validatingBasicInfo', [
             'title' => 'required',
             'category_id' => 'required',
-            'is_active' => 'required|string'
+            'is_active' => 'required|string',
+            'text_sms' => 'nullable'
         ]);
 
         $data = $request->all();
@@ -58,7 +59,7 @@ class PageController extends Controller
             'category_id' => 'required',
             'html' => 'required|string',
             'css' => 'required|string',
-            'sms_text' => 'required|string'
+            'sms_text' => 'nullable|string'
         ]);
 
         try {
@@ -73,7 +74,7 @@ class PageController extends Controller
                 'html' => $request->html,
                 'css' => $request->css,
                 'status' => $hasForm ? 2 : 1,
-                'sms_text' => $request->sms_text
+                'sms_text' => $request->sms_text ? $request->sms_text : ''
             ]);
 
             DB::commit();
@@ -118,7 +119,7 @@ class PageController extends Controller
             $page->update([
                'title' => $request->title,
                'category_id' => $request->category_id,
-               'sms_text' => $request->sms_text
+               'sms_text' => $request->sms_text ? $request->sms_text : ''
             ]);
             return view('pages.update', compact('page'));
         }
@@ -134,7 +135,7 @@ class PageController extends Controller
             'category_id' => 'required',
             'html' => 'required|string',
             'css' => 'required|string',
-            'sms_text' => 'required|string'
+            'sms_text' => 'nullable|string'
         ]);
 
         if($validator->fails()){
@@ -153,7 +154,7 @@ class PageController extends Controller
                 'html' => $request->html,
                 'css' => $request->css,
                 'status' => $hasForm ? 2 : 1,
-                'sms_text' => $request->sms_text
+                'sms_text' => $request->sms_text ? $request->sms_text : ''
             ]);
 
             DB::commit();

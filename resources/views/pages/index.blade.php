@@ -56,65 +56,50 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('pages.create') }}" method="GET">
-                            <div class="modal-body text-right">
-
-                                @include('layout.errors', ['errors' => $errors->validatingBasicInfo])
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="title">عنوان:</label>
-                                        <input type="text" class="form-control" name="title" id="title"
-                                               value="{{ old('title') }}">
-                                    </div>
+                        <div class="modal-body text-right">
+                            @include('layout.errors', ['errors' => $errors->validatingBasicInfo])
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="title">عنوان:</label>
+                                    <input type="text" class="form-control" name="title" id="title"
+                                           value="{{ old('title') }}">
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="col-md-3 form-control-label" for="category_id">دسته بندی:</label>
-                                        <div class="col-md-9">
-                                            <select id="category_id" name="category_id" class="form-control input-lg">
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12" style="margin-top: 65px;">
-                                    <div class="form-group">
-                                        <label class="col-md-3 form-control-label" for="select">فعال:</label>
-                                        <div class="col-md-9">
-                                            <select id="is_active" name="is_active" class="form-control input-lg">
-                                                <option value="1" selected>فعال</option>
-                                                <option value="0">غیرفعال</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="custom_checkbox" class="col-md-3 form-control-label mt-2">فعال کردن
-                                            پیامک:</label>
-                                        <input type="checkbox" id="custom_checkbox" class="mr-3"
-                                               style="margin-top: 13px !important;">
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-2" id="sms_text_container" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="sms_text" class="col-md-5 form-control-label mt-2">وارد کردن متن
-                                            پیامک:
-                                        </label>
-                                        {{--                                    <input type="text" class="form-control" id="custom_input" name="custom_input" value="">--}}
-                                        <textarea class="form-control" id="sms_text" name="sms_text"
-                                                  rows="4"></textarea>
-                                    </div>
-                                </div>
-
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بازگشت</button>
-                                <button type="submit" class="btn btn-primary">ادامه</button>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 form-control-label" for="category_id">دسته بندی:</label>
+                                    <div class="col-md-9">
+                                        <select id="category_id" name="category_id" class="form-control input-lg">
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="custom_checkbox" class="col-md-3 form-control-label mt-2">فعال کردن
+                                        پیامک:</label>
+                                    <input type="checkbox" id="custom_checkbox" class="mr-3"
+                                           style="margin-top: 13px !important;">
+                                </div>
+                            </div>
+                            <div class="col-12 mt-2" id="sms_text_container" style="display: none;">
+                                <div class="form-group">
+                                    <label for="sms_text" class="col-md-5 form-control-label mt-2">وارد کردن متن
+                                        پیامک:
+                                    </label>
+                                    {{--                                    <input type="text" class="form-control" id="custom_input" name="custom_input" value="">--}}
+                                    <textarea class="form-control" id="sms_text" name="sms_text"
+                                              rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">بازگشت</button>
+                            <button type="submit" class="btn btn-primary">ادامه</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,25 +196,6 @@
                                                                     {{ $category->title }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12" style="margin-top: 65px;">
-                                                <div class="form-group">
-                                                    <label class="col-md-3 form-control-label"
-                                                           for="select">فعال:</label>
-                                                    <div class="col-md-9">
-                                                        <select id="is_active" name="is_active"
-                                                                class="form-control input-lg">
-                                                            <option
-                                                                value="1" {{ $page->is_active == 1 ? 'selected' : '' }}>
-                                                                فعال
-                                                            </option>
-                                                            <option
-                                                                value="0" {{ $page->is_active == 0 ? 'selected' : '' }}>
-                                                                غیرفعال
-                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Registration;
+use App\Models\User;
+use App\Notifications\SendWelcomeSMS;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules\File;
 
 class RegistrationController extends Controller
@@ -45,7 +49,11 @@ class RegistrationController extends Controller
                 'page_id' => $form_step_one_data[0]['page_id'],
                 'phone_number' => $form_step_one_data[1]['phone_number'],
             ]);
-            // send an SMS
+            $page = Page::findOrFail($form_step_one_data[0]['page_id']);
+            if ($page->sms_text){
+                $sms = new SendWelcomeSMS($page->sms_text, $form_step_one_data[1]['phone_number']);
+                $sms->toSms();
+            }
             return 'success';
         }else{
             return 'error';
@@ -53,6 +61,7 @@ class RegistrationController extends Controller
     }
     public function storeData(Request $request): RedirectResponse
     {
+        dd($request->all());
         $request->validate([
             'form_2_page_id' => 'required',
             'form_2_phone_number' => 'required|string|min:11|max:11|starts_with:09',
@@ -84,7 +93,7 @@ class RegistrationController extends Controller
                 'degree' => $request->degree ? $request->degree : null,
                 'field' => $request->field ? $request->field : null,
                 'university_name' => $request->university_name ? $request->university_name : null,
-                'province_id' => $request->province_id ? $request->email : null,
+                'province_id' => $request->province_id ? $request->province_id : null,
                 'city_id' => $request->city_id ? $request->city_id : null
             ]);
 

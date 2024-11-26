@@ -103,7 +103,7 @@
                 : "\n    ."
                     .concat(
                       v,
-                      " {\n      width: 8%;\n      display: table-cell;\n      height: "
+                      " {\n      width: 33%;\n      display: table-cell;\n      height: "
                     )
                     .concat(d, "px;\n    }"),
               u = "\n  .".concat(c, "cell30 {\n    width: 30%;\n  }"),

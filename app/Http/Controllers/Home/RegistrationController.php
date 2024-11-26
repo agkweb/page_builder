@@ -45,8 +45,8 @@ class RegistrationController extends Controller
                 'page_id' => $form_step_one_data[0]['page_id'],
                 'phone_number' => $form_step_one_data[1]['phone_number'],
             ]);
-            return 'success';
             // send an SMS
+            return 'success';
         }else{
             return 'error';
         }

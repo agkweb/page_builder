@@ -27,9 +27,6 @@ class PageController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $user = User::all()->first();
-        $user->notify(new SendWelcomeSMS());
-//        Notification::send(User::all()->first(), new SendWelcomeSMS('aaaaa'));
         $pages = Page::with('category')->latest()->paginate(10);
         $categories = Category::get();
         return view('pages/index', compact('pages', 'categories'));
@@ -60,7 +57,8 @@ class PageController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'html' => 'required|string',
-            'css' => 'required|string'
+            'css' => 'required|string',
+            'sms_text' => 'required|string'
         ]);
 
         try {
@@ -74,7 +72,8 @@ class PageController extends Controller
                 'user_id' => '1',
                 'html' => $request->html,
                 'css' => $request->css,
-                'status' => $hasForm ? 2 : 1
+                'status' => $hasForm ? 2 : 1,
+                'sms_text' => $request->sms_text
             ]);
 
             DB::commit();
@@ -104,11 +103,12 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Page $page)
+    public function edit(Request $request, Page $page): Factory|Application|View|RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'sms_text' => 'required|string'
         ]);
 
         if($validator->fails()){
@@ -117,7 +117,8 @@ class PageController extends Controller
             $page = Page::findOrFail($request->page_id);
             $page->update([
                'title' => $request->title,
-               'category_id' => $request->category_id
+               'category_id' => $request->category_id,
+               'sms_text' => $request->sms_text
             ]);
             return view('pages.update', compact('page'));
         }
@@ -132,7 +133,8 @@ class PageController extends Controller
             'title' => 'required|min:3',
             'category_id' => 'required',
             'html' => 'required|string',
-            'css' => 'required|string'
+            'css' => 'required|string',
+            'sms_text' => 'required|string'
         ]);
 
         if($validator->fails()){
@@ -151,6 +153,7 @@ class PageController extends Controller
                 'html' => $request->html,
                 'css' => $request->css,
                 'status' => $hasForm ? 2 : 1,
+                'sms_text' => $request->sms_text
             ]);
 
             DB::commit();
